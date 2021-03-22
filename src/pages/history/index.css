@@ -1,0 +1,49 @@
+.container {
+	padding: 38px;
+	background-color: #E4E4E4;
+	min-height: 100vh;
+	box-sizing: border-box;
+}
+.list {
+	box-shadow: 0px 2px 14px 0px rgba(0,0,0,0.06);
+	background-color: #fff;
+	padding: 0 76px;
+}
+.item {
+	padding: 52px 0;
+	border-top: dashed 1px rgba(0,0,0,0.4);
+	line-height: 1;
+}
+.item.no-border {
+	border-top: none;
+}
+.image {
+	width: 201px;
+	min-width: 201px;
+	height: 267px;
+	border-radius: 7px;
+	overflow: hidden;
+	margin-left: 20px;
+}
+.title {
+	font-family: SourceHanSansCN-Medium;
+	font-size: 38px;
+	font-weight: bold;
+	color: #333333;
+}
+.row {
+	font-family: SourceHanSansCN-Regular;
+	font-size: 28px;
+	color: #333333;
+	opacity: 0.6;
+	margin-top: 26px;
+}
+.more {
+	padding-bottom: 46px;
+	font-family: SourceHanSansCN-Regular;
+	font-size: 30px;
+	line-height: 30px;
+	color: #333333;
+	opacity: 0.6;
+	text-align: center;
+}

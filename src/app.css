@@ -1,0 +1,38 @@
+page {
+  background: #ffffff;
+}
+
+.flex-row {
+	display: flex;
+	align-items: center;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.flex-between {
+	justify-content: space-between;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.limit-line {
+	text-overflow: ellipsis;
+	overflow : hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.line-2 {
+	-webkit-line-clamp: 2;
+}
+
+.line-3 {
+	-webkit-line-clamp: 3;
+}

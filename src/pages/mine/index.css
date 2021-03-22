@@ -1,0 +1,71 @@
+.user {
+	min-height: 100vh;
+	box-sizing: border-box;
+	padding-bottom: 40rpx;
+}
+
+.userinfo {
+	background-color: #ffffff;
+	margin: 30rpx 26rpx;
+	box-shadow: 0px 2rpx 14rpx 0px rgba(0,0,0,0.06); 
+	height: 170rpx;
+}
+.login-btn {
+	font-weight: normal;
+	font-size: 30rpx;
+	background-color: #07c160;
+	color: #ffffff;
+}
+.login-btn::after {
+	border: none;
+}
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+.userinfo-nickname {
+  color: #aaa;
+}
+.usermotto {
+  margin-top: 200px;
+}
+
+
+.cells {
+	background-color: #ffffff;
+	box-shadow: 0px 2rpx 14rpx 0px rgba(0,0,0,0.06); 
+	overflow: hidden;
+	border-radius: 8rpx;
+	margin: 0 26rpx;
+	padding: 0 26rpx;
+}
+.cell {
+	justify-content: space-between;
+	position: relative;
+	height: 108rpx;
+	width: 100%;
+	font-size: 30rpx;
+	color: #070707;
+}
+.cell + .cell {
+	border-top: 1rpx solid #e8e8e8;
+}
+.cell-btn {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.cell-btn::after {
+	border: none;
+}
+.cell-icon {
+	width: 44rpx;
+	height: 44rpx;
+	margin-right: 30rpx;
+}
+.icon-arrowright {
+	width: 32rpx;
+	height: 32rpx;
+}
