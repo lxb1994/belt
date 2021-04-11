@@ -1,7 +1,8 @@
-const pages = ['pages/index/index', 'pages/mine/index', 'pages/history/index'];
+const pages = ['pages/index/index', 'pages/mine/index', 'pages/history/index', 'pages/commit/index'];
+const AliPages = ['ali-pages/index/index']
 
 module.exports.ali = {
-  pages,
+  AliPages,
   window: {
     defaultTitle: 'Remax Ali Template',
     titleBarColor: '#282c34',

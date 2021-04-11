@@ -1,0 +1,17 @@
+
+.itemBox {
+    margin-bottom: 42px;
+}
+.iconItem{
+    display: block;
+    width: 82px;
+    height: 82px;
+    margin: auto;
+    margin-bottom: 18px;
+}
+.textItem{
+    font-family: SourceHanSansCN-Medium;
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c2c2c;
+}

@@ -18,7 +18,8 @@ const webpackConfig = {
 
 	// config, webpack, addCSSRule
 	configWebpack: function ({ config }) {
-		config.plugin('custom-copy').use(CopyPlugin, [ CopyPluginConfig ])
+		config.plugin('custom-copy').use(CopyPlugin, [ CopyPluginConfig ]);
+		config.performance.hints(false)
 	}
 }
 

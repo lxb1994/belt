@@ -1,0 +1,17 @@
+
+.modelContainer {
+	position: absolute;
+	top: 20px;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1;
+	font-size: 0;
+}
+.model {
+	width: 100vw;
+}
+.belt {
+	position: absolute;
+	left: 0;
+	top: 0;
+}

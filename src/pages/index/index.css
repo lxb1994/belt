@@ -1,3 +1,33 @@
 .page {
 	background-color: #ffffff;
+	height: 100vh;
+	max-height: 100vh;
+	overflow: hidden;
+	position: relative;
+}
+.planSelectBox{
+	position: absolute;
+	top: 166px;
+	left: 32px;
+	display: inline-block;
+	z-index: 2;
+}
+.productListsBox{
+	position: absolute;
+	top: 35px;
+	right: 20px;
+	display: inline-block;
+	z-index: 2;
+}
+.turnLeft, .turnRight {
+	width: 135px;
+	position: fixed;
+	bottom: 330px;
+	z-index: 5;
+}
+.turnLeft {
+	right: 110px;
+}
+.turnRight {
+	left: 110px;
 }

@@ -1,0 +1,63 @@
+.mask {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 99;
+}
+.modelContainer {
+	position: absolute;
+	left: 25px;
+	top: 50px;
+	padding: 42px 26px 26px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: rgba(0,0,0, 0.6);
+}
+.title {
+	font-size: 30px;
+	color: #fff;
+	font-weight: 500;
+	text-align: center;
+	margin-bottom: 32px;
+}
+.content {
+	display: flex;
+	align-items: flex-start;
+	font-size: 0;
+}
+
+.scrollView {
+	height: 550px;
+	width: 224px;
+}
+.modelList {
+	display: flex;
+	flex-direction: column;
+}
+.modelItem {
+	width: 220px;
+	background-color: rgba(255,255,255, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 12px;
+}
+.modelImage {
+	width: 100%;
+}
+.modelBtn {
+	width: 168px;
+	height: 50px;
+	line-height: 50px;
+	border-radius: 8px;
+	background: linear-gradient(to right, #61c4e1, #95d6e9);
+	font-size: 22px;
+	color: #fff;
+	font-weight: 400;
+	margin-top: 30px;
+	text-align: center;
+}

@@ -1,5 +1,6 @@
 {
   "miniprogramRoot": "dist/wechat",
+	"appid": "wxe978f9e8b0bee324",
   "setting": {
     "urlCheck": false,
     "es6": false,

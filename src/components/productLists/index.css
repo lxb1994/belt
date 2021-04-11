@@ -1,0 +1,44 @@
+.productBox {
+	width: 164px;
+	box-sizing: border-box;
+}
+.arrowBase {
+	display: block;
+	margin: auto;
+	width: 74px;
+	height: 40px;
+	margin: 10px auto;
+}
+.disable {
+	opacity: 0.3;
+}
+.pre {
+}
+.next {
+	transform: rotate(180deg);
+}
+.listsBox {
+	position: relative;
+	max-height: 730px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.lists {
+	position: relative;
+	transition: 0.5s;
+}
+.listItem {
+	width: 165px;
+	height: 142px;
+	margin: 0 auto 7px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.listItem:last-child {
+	margin-bottom: 0px;
+}
+.itemImage {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
