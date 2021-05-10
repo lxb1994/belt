@@ -41,7 +41,7 @@ export default class productLists extends React.Component {
 						{
 							products.map(item => (
 								<View className={Styles.listItem} key={item.id} onClick={this._onClick_.bind(this, item)}>
-									<Image className={Styles.itemImage} src={IMG_URL + item.cover} mode="aspectFit"/>
+									<Image className={Styles.itemImage} src={IMG_URL + item.image1.image} mode="aspectFit"/>
 								</View>
 							))
 						}

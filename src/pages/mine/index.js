@@ -30,55 +30,44 @@ export default class Mine extends React.Component {
 		showShareMenu({  withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
 		const userInfo = getStorageSync('userInfo') || {}
 		const token = getStorageSync('token') || ''
-		this.setState({userInfo: userInfo.userInfo || {}, token})
+		this.setState({userInfo: userInfo || {}, token})
   }
 
-	getUserInfo = (e) => {
-		// wx.getUserProfile({
-		// 	desc: '获取信息进行登录，保存您的个人搭配。',
-		// 	success: async (loginRes) => {
-		// 		showLoading({title: '正在登录...'})
-		// 		console.log('Api', loginRes, e.detail)
-		// 		return
-		// 		let res = await Api.login({type: 2, nickname: e.detail.userInfo.nickName, head: e.detail.userInfo.avatarUrl, code: loginRes.code})
-		// 		hideLoading()
-		// 		if (res.code === 1) {
-		// 			setStorageSync('token', res.data.login_data.fresh_token)
-		// 			setStorageSync('userInfo', e.detail)
-		// 			this.setState({
-		// 				userInfo: e.detail.userInfo,
-		// 				token: res.data.login_data.fresh_token
-		// 			})
-		// 		}
-		// 	}
-		// })
-		showLoading({title: '正在登录...'})
-		wx.login({
+	getUserProfile = (e) => {
+		wx.getUserProfile({
+			desc: '获取信息进行登录。',
 			success: async (loginRes) => {
-				console.log('Api', loginRes.code, e)
-				let res = await Api.login({type: 2, nickname: e.detail.userInfo.nickName, head: e.detail.userInfo.avatarUrl, code: loginRes.code})
-				hideLoading()
-				if (res.code !== 1) {
-					showToast({ title: '登录失败，请重新尝试。', icon: 'none' })
-					return
-				}
-				setStorageSync('token', res.data.login_data.fresh_token)
-				setStorageSync('userInfo', e.detail)
-				this.setState({
-					userInfo: e.detail.userInfo,
-					token: res.data.login_data.fresh_token
+				showLoading({title: '正在登录...'})
+				wx.login({
+					success: async (loginData) => {
+						const { userInfo } = loginRes
+						let res = await Api.login({type: 2, nickname: userInfo.nickName, head: userInfo.avatarUrl, code: loginData.code})
+						hideLoading()
+						if (res.code === 1) {
+							setStorageSync('token', res.data.login_data.fresh_token)
+							setStorageSync('userInfo', userInfo)
+							this.setState({
+								userInfo: userInfo,
+								token: res.data.login_data.fresh_token
+							})
+						}
+					},
+					fail: () => hideLoading()
 				})
-			},
-			fail: () => hideLoading()
+			}
 		})
   }
 
-	onGetPhoneNumber(e) {
-		console.log(e)
-	}
-
 	onClickLink(item) {
 		if (item.link) navigateTo({url: item.link});
+	}
+
+	onShareAppMessage() {
+		return { title: ' 快来DIY腰饰搭配，秒变时髦“小腰精”！' }
+	}
+
+	onShareTimeline() {
+		return { title: ' 快来DIY腰饰搭配，秒变时髦“小腰精”！' }
 	}
 
   render() {
@@ -88,7 +77,7 @@ export default class Mine extends React.Component {
 				<View className={`${Styles.userinfo} flex-row`}>
 					{
 						(!token && canIUse)
-						? <Button className={Styles['login-btn']} open-type="getUserInfo" onGetUserInfo={this.getUserInfo} onTap={this.getUserInfo} type="primary" size="mini"> 点击登录 </Button>
+						? <Button className={Styles['login-btn']} onTap={this.getUserProfile} type="primary" size="mini"> 点击登录 </Button>
 						: <View className='flex-row'>
 							<Image className={Styles['userinfo-avatar']} src={userInfo.avatarUrl} mode="cover" />
 							<Text className={Styles['userinfo-nickname']}>{userInfo.nickName}</Text>

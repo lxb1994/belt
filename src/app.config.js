@@ -2,10 +2,29 @@ const pages = ['pages/index/index', 'pages/mine/index', 'pages/history/index', '
 const AliPages = ['ali-pages/index/index']
 
 module.exports.ali = {
-  AliPages,
+  pages: AliPages,
   window: {
-    defaultTitle: 'Remax Ali Template',
+    defaultTitle: '智能搭',
     titleBarColor: '#282c34',
+		tabBar: {
+			"textColor": "#999999",
+			"selectedselectedColorColor": "#f92557",
+			backgroundColor: '#ffffff',
+			items: [
+				{ 
+					pagePath: 'pages/index/index',
+					name: '首页',
+					icon: './assets/tabbar/home.jpg',
+					activeIcon: './assets/tabbar/home-select.jpg'
+				},
+				{ 
+					pagePath: 'pages/mine/index',
+					name: '我的',
+					icon: './assets/tabbar/mine.jpg',
+					activeIcon: './assets/tabbar/mine-select.jpg'
+				}
+			]
+		}
   },
 };
 

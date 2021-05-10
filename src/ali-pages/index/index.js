@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View, Text, Image, Button, navigateTo } from 'remax/one';
+import { View, Text } from 'remax/one';
 import Styles from './index.css';
 
-export default class Mine extends React.Component {
+export default class Index extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -15,7 +15,7 @@ export default class Mine extends React.Component {
   render() {
     return (
 			<View className={Styles.user}>
-				123
+				<Text>123</Text>
 			</View>
 		)
   }

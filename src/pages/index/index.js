@@ -1,19 +1,16 @@
 import * as React from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
-import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, chooseImage, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu } from 'remax/wechat';
+import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, chooseImage, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync } from 'remax/wechat';
 import Styles from './index.css';
 
 import ProductLists from '../../components/productLists/index'
-import PlanSelect from '../../components/planSelect/index'
+import ModelLists from '../../components/ModelLists/index'
 import IndexBtns from '../../components/indexBtns/index'
 import Belts from '../../components/belts/index'
-import Model from '../../components/model/index'
 import Recommendation from '../../components/recommendation/index'
 import ModelToBelt from '../../components/modelToBelt/index'
 import Guide from '../../components/guide/index'
-
-import TurnLeft from '../../assets/turn-left.jpg'
-import TurnRight from '../../assets/turn-right.jpg'
+import ModelCategory from '../../components/modelCategory/index'
 
 import { IMG_URL } from '../../api/config'
 
@@ -27,7 +24,6 @@ export default class IndexPage extends React.Component {
 			theme_category: [],
 			theme_to_style: [],
 			theme_style: [],
-			showModelCategory: false,
 			showRecommendation: false,
 			recommendationMode: 'belt',
 			modelToBelt: [],
@@ -42,6 +38,7 @@ export default class IndexPage extends React.Component {
 			// 模特
 			modelAll: {},
 			model: {},
+			modelListId: '',
 			// 当前转向
 			turnDirection: 1,
 			readGuide: false
@@ -72,20 +69,29 @@ export default class IndexPage extends React.Component {
 		this.getHomeData();
 	}
 
+	onShareAppMessage() {
+		return { title: ' 快来DIY腰饰搭配，秒变时髦“小腰精”！' }
+	}
+
+	onShareTimeline() {
+		return { title: ' 快来DIY腰饰搭配，秒变时髦“小腰精”！' }
+	}
+
   render() {
-		const {  beltAll, beltListId, belt, modelAll, model, theme_style_category, showModelCategory, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide } = this.state
+		const {  beltAll, beltListId, belt, modelAll, model, modelListId, theme_style_category, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide } = this.state
 		const { beltMoveX, beltMoveY } = this
     return (
 			<View className={Styles.page}>
 				<View className={Styles.planSelectBox}>
-					<PlanSelect selectPlan={this.selectPlan}></PlanSelect>
+					<ModelLists products={modelAll[modelListId] || []} onClick={this.selectModel} />
 				</View>
 				<View className={Styles.productListsBox}>
 					<ProductLists products={beltAll[beltListId] || []} onClick={this.selectBelt} />
 				</View>
-				<IndexBtns reset={this.onReset} confirm={this.onSave}/>
+				<IndexBtns reset={this.onReset} confirm={this.onSave} intelligence={this.onIntelligence}/>
 				<Belts list={theme_style_category} onClick={this.onChangeBeltListId}/>
-				{showModelCategory && <Model allList={modelAll} category={theme_category} onClick={this.selectModel} onClose={this.onClose.bind(this, 'showModelCategory')}/>}
+				<ModelCategory list={theme_category} onClick={this.onChangeModelListId}/>
+
 				{showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this.selectRecommendation} onClose={this.onClose.bind(this, 'showRecommendation')}/>}
 
 				<ModelToBelt
@@ -106,41 +112,6 @@ export default class IndexPage extends React.Component {
 		)
   }
 
-	// 选择推荐方案、智能推荐
-	selectPlan = (event) => {
-		const item = event.currentTarget.dataset.data
-		switch (item.id) {
-			case 1:
-				this.setState({showModelCategory: true})
-				break;
-			case 2:
-				const { model, belt, theme_to_style, theme, theme_style } = this.state
-				let modelToBelt = []
-				let recommendationMode = ''
-				if (belt.id) {
-					let modelIdArr = []
-					theme_to_style.map(item => {
-						if (item.theme_style_id === belt.id) modelIdArr.push(item.theme_id)
-					})
-					theme.map(item => {
-						if (modelIdArr.indexOf(item.id) > -1) modelToBelt.push(item)
-					})
-					recommendationMode = 'model'
-				} else {
-					let beltIdArr = []
-					theme_to_style.map(item => {
-						if (item.theme_id === model.id) beltIdArr.push(item.theme_style_id)
-					})
-					theme_style.map(item => {
-						if (beltIdArr.indexOf(item.id) > -1) modelToBelt.push(item)
-					})
-					recommendationMode = 'belt'
-				}
-				this.setState({showRecommendation: true, recommendationMode, modelToBelt})
-				break;
-		}
-	}
-
 	// 选择商品
 	selectBelt = (item) => {
 		wx.getImageInfo({
@@ -160,8 +131,7 @@ export default class IndexPage extends React.Component {
 			model: {...item},
 			beltLeft: item.image1.x * this.beltMultiple / 2,
 			beltTop: item.image1.y * this.beltMultiple / 2,
-			belt: {},
-			showModelCategory: false,
+			belt: {}
 		})
 	}
 	// 智能搭配
@@ -189,6 +159,10 @@ export default class IndexPage extends React.Component {
 		this.setState({ beltListId: item.id })
 	}
 
+	onChangeModelListId = (item) => {
+		this.setState({ modelListId: item.id })
+	}
+
 	moveBelt = (x, y) => {
 		this.beltMoveX = x
 		this.beltMoveY = y
@@ -211,6 +185,7 @@ export default class IndexPage extends React.Component {
 			})
 			// 区分模特各分类数组
 			let modelAll = {}
+			let modelListId = theme_category[0].id
 			theme_category.map(it => { modelAll[it.id] = [] })
 			theme.map(it => {
 				it.category_ids.map(child => {
@@ -230,6 +205,7 @@ export default class IndexPage extends React.Component {
 				beltTop: theme[0].image1.y * this.beltMultiple / 2,
 				modelAll,
 				model: theme[0] || {},
+				modelListId,
 			})
 		}
 	}
@@ -237,6 +213,32 @@ export default class IndexPage extends React.Component {
 	// 重置
 	onReset = () => {
 		this.setState({ belt: {} })
+	}
+
+	onIntelligence = () => {
+		const { model, belt, theme_to_style, theme, theme_style } = this.state
+		let modelToBelt = []
+		let recommendationMode = ''
+		if (belt.id) {
+			let modelIdArr = []
+			theme_to_style.map(item => {
+				if (item.theme_style_id === belt.id) modelIdArr.push(item.theme_id)
+			})
+			theme.map(item => {
+				if (modelIdArr.indexOf(item.id) > -1) modelToBelt.push(item)
+			})
+			recommendationMode = 'model'
+		} else {
+			let beltIdArr = []
+			theme_to_style.map(item => {
+				if (item.theme_id === model.id) beltIdArr.push(item.theme_style_id)
+			})
+			theme_style.map(item => {
+				if (beltIdArr.indexOf(item.id) > -1) modelToBelt.push(item)
+			})
+			recommendationMode = 'belt'
+		}
+		this.setState({showRecommendation: true, recommendationMode, modelToBelt})
 	}
 
 	// 转向
@@ -310,6 +312,7 @@ export default class IndexPage extends React.Component {
 								canvasId: 'shareCanvas',
 								success: (imgRes) => {
 									Api.uploadImg({filePath: imgRes.tempFilePath}).then(async uploadRes => {
+										if (uploadRes.code !== 1) return showToast({ title: res.msg, icon: 'none' })
 										let parmas = {
 											theme_id: model.id,
 											theme_style_id: belt.id,
@@ -318,6 +321,7 @@ export default class IndexPage extends React.Component {
 										let res = await Api.createOrder(parmas)
 										hideLoading()
 										if (res.code !== 1) return showToast({ title: res.error, icon: 'none' })
+										setStorageSync('submitInfo', {...parmas, title: belt.title, ...res.data})
 										navigateTo({url: '/pages/commit/index?sn=' + res.data.sn})
 									})
 								},

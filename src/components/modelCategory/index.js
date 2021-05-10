@@ -30,6 +30,7 @@ export default class Belts extends React.Component {
 	render() {
 		const { scollLeft } = this.state
 		const { list } = this.props
+
 		return (
 			<View className={Styles.container}>
 				<Image className={Styles.right} src={Right} onClick={this.onTurnRight.bind(this, 'left')} />
@@ -37,7 +38,7 @@ export default class Belts extends React.Component {
 					<View className={Styles.list} style={{left: `${scollLeft * 33.33}%`}}>
 						{(list || []).map(item => (
 							<View className={Styles.item} key={item.id} onClick={this._onClick_.bind(this, item)}>
-								<View className={Styles.imageContainer}><Image className={Styles.image} src={IMG_URL + item.image} mode="widthFix"/></View>
+								<View className={Styles.imageContainer}><Image className={Styles.image} src={IMG_URL + item.image} mode="heightFix"/></View>
 								<View>{item.title}</View>
 							</View>
 						))}

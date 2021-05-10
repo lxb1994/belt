@@ -7,8 +7,8 @@
 }
 .planSelectBox{
 	position: absolute;
-	top: 166px;
-	left: 32px;
+	top: 35px;
+	left: 20px;
 	display: inline-block;
 	z-index: 2;
 }

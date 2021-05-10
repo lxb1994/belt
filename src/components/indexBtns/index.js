@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { View, Image } from 'remax/one';
-import Reset from '../../assets/reset.jpg';
-import Submit from '../../assets/submit.jpg';
+import { View, Text } from 'remax/one';
 
 import Styles from './index.css';
 const IndexBtns = (props) => {
-
 	return (
 		<View className={Styles.container}>
-			<Image className={Styles.btn} src={Reset} onClick={props.reset} mode="widthFix"/>
-			<Image className={Styles.btn} src={Submit} onClick={props.confirm} mode="widthFix"/>
+			<Text className={`${Styles.btn} ${Styles.primary}`} onTap={props.intelligence}>智能搭</Text>
+			<Text className={Styles.btn} onTap={props.reset}>重置</Text>
+			<Text className={`${Styles.btn} ${Styles.primary}`} onTap={props.confirm}>提交</Text>
 		</View>
 	)
 }

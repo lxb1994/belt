@@ -23,9 +23,11 @@ req.globalRequest = ({
 				switch (res.data.code) {
 					case 12:
 						removeStorageSync('token')
+						removeStorageSync('userInfo')
 						break
 					case 13:
 						removeStorageSync('token')
+						removeStorageSync('userInfo')
 						break;
 				}
 				reslove(res.data)
@@ -54,6 +56,16 @@ req.upload = ({
 				...header
       },
 			success: (res) => {
+				switch (res.data.code) {
+					case 12:
+						removeStorageSync('token')
+						removeStorageSync('userInfo')
+						break
+					case 13:
+						removeStorageSync('token')
+						removeStorageSync('userInfo')
+						break;
+				}
 				reslove(JSON.parse(res.data))
 			},
 			fail: (err) => {

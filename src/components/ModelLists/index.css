@@ -28,7 +28,7 @@
 	transition: 0.5s;
 }
 .listItem {
-	width: 165px;
+	width: 100px;
 	height: 20%;
 	margin: 0 auto;
 	box-sizing: border-box;
@@ -38,7 +38,8 @@
 	margin-bottom: 0px;
 }
 .itemImage {
-	width: 165px;
+	width: 100px;
 	height: 142px;
 	overflow: hidden;
+	background-color: #F3F2F0;
 }
