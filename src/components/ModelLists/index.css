@@ -1,13 +1,13 @@
 .productBox {
-	width: 164px;
+	width: 160px;
 	box-sizing: border-box;
 }
 .arrowBase {
 	display: block;
 	margin: auto;
-	width: 68px;
-	height: 40px;
-	margin: 10px auto 30px;
+	width: 34px;
+	height: 20px;
+	margin: 10px auto 20px;
 }
 .disable {
 	opacity: 0.3;
@@ -19,7 +19,7 @@
 }
 .listsBox {
 	position: relative;
-	max-height: 600px;
+	max-height: 450px;
 	box-sizing: border-box;
 	overflow: hidden;
 }

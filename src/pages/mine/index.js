@@ -18,9 +18,9 @@ export default class Mine extends React.Component {
 			token: '',
 			canIUse: wx.canIUse('button.open-type.getUserInfo'),
 			cells: [
-				{ name: '分享好友', id: 1, icon: Share, openType: 'share' },
-				{ name: '我的搭配', id: 2, icon: History, link: '/pages/history/index', needLogin: true},
-				{ name: '联系客服', id: 3, icon: Customer, openType: 'contact' },
+				{ name: '分享好友', id: 1, icon: Share, openType: 'share', iconWidth: '28rpx' },
+				{ name: '我的搭配', id: 2, icon: History, link: '/pages/history/index', needLogin: true, iconWidth: '30rpx'},
+				{ name: '联系客服', id: 3, icon: Customer, openType: 'contact', iconWidth: '36rpx' },
 			]
 		}
 	}
@@ -89,7 +89,7 @@ export default class Mine extends React.Component {
 						cells.map(item => (!item.needLogin || (item.needLogin && token)) && (
 								<View className={`${Styles.cell} flex-row`} key={item.id} onClick={this.onClickLink.bind(this, item)}>
 									{item.openType && <Button className={Styles['cell-btn']} open-type={item.openType} type="default" style="width: 100%;height: 100%;background-color: transparent;"></Button>}
-									<Image className={Styles['cell-icon']} src={item.icon} />
+									<Image className={Styles['cell-icon']} src={item.icon} mode="widthFix" style={`width: ${item.iconWidth}`}/>
 									<Text className='flex-1'>{item.name}</Text>
 									<Image className={Styles['icon-arrowright']} src={ArrowRight} />
 								</View>

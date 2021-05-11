@@ -14,11 +14,16 @@ export default class Model extends React.Component {
 	onChange = (e) => {
 		const { x, y, source } = e.detail
 		if (source !== 'touch') return
-		this.props.onChange && this.props.onChange(x, y, source)
+		this.props.onChange && this.props.onChange(x, y)
+	}
+
+	onScale = (e) => {
+		const { x, y, scale } = e.detail
+		this.props.onChange && this.props.onChange(x, y, scale)
 	}
 
 	render() {
-		const { model, belt, turnDirection, beltLeft, beltTop, beltWidth, beltHeight } = this.props
+		const { model, belt, scaleValue, turnDirection, beltLeft, beltTop, beltWidth, beltHeight } = this.props
 		return (
 			<MovableArea id="model-container" className={Styles.modelContainer}>
 				{model.image1 && <Image className={Styles.model} src={IMG_URL + model[`image${turnDirection}`].image} mode="widthFix"/>}
@@ -28,6 +33,9 @@ export default class Model extends React.Component {
 					x={beltLeft}
 					y={beltTop}
 					onChange={this.onChange}
+					onScale={this.onScale}
+					scale
+					scale-value={scaleValue}
 				>
 					{
 						belt.image1 &&

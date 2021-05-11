@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
-import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, chooseImage, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync } from 'remax/wechat';
+import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, chooseImage, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync, hideTabBar } from 'remax/wechat';
 import Styles from './index.css';
 
 import ProductLists from '../../components/productLists/index'
 import ModelLists from '../../components/ModelLists/index'
 import IndexBtns from '../../components/indexBtns/index'
-import Belts from '../../components/belts/index'
 import Recommendation from '../../components/recommendation/index'
 import ModelToBelt from '../../components/modelToBelt/index'
 import Guide from '../../components/guide/index'
 import ModelCategory from '../../components/modelCategory/index'
+import Tabbar from '../../components/tabbar/index'
 
 import { IMG_URL } from '../../api/config'
 
@@ -46,6 +46,7 @@ export default class IndexPage extends React.Component {
 
 		this.beltMoveX = 0
 		this.beltMoveY = 0
+		this.scale = 1
 		this.windowMultiple = 0
 		this.beltMultiple = 0
 		this.windowWidth = 0
@@ -54,7 +55,13 @@ export default class IndexPage extends React.Component {
 
   componentDidMount() {
 		showShareMenu({  withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
-		this.setState({readGuide: getStorageSync('readGuide')})
+  }
+
+	onPullDownRefresh() {
+		this.getHomeData();
+	}
+
+	onShow() {
 		wx.getSystemInfo({
 			success: (res) => {
 				this.windowWidth = res.windowWidth
@@ -63,10 +70,6 @@ export default class IndexPage extends React.Component {
 				this.getHomeData();
 			}
 		})
-  }
-
-	onPullDownRefresh() {
-		this.getHomeData();
 	}
 
 	onShareAppMessage() {
@@ -79,18 +82,21 @@ export default class IndexPage extends React.Component {
 
   render() {
 		const {  beltAll, beltListId, belt, modelAll, model, modelListId, theme_style_category, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide } = this.state
-		const { beltMoveX, beltMoveY } = this
+		const { beltMoveX, beltMoveY, scale } = this
     return (
 			<View className={Styles.page}>
+				<Tabbar list={theme_style_category} onClick={this.onChangeBeltListId}/>
 				<View className={Styles.planSelectBox}>
 					<ModelLists products={modelAll[modelListId] || []} onClick={this.selectModel} />
 				</View>
 				<View className={Styles.productListsBox}>
 					<ProductLists products={beltAll[beltListId] || []} onClick={this.selectBelt} />
 				</View>
+				<View className={Styles.ModelCategory}>
+					<ModelCategory list={theme_category} onClick={this.onChangeModelListId}/>
+				</View>
+
 				<IndexBtns reset={this.onReset} confirm={this.onSave} intelligence={this.onIntelligence}/>
-				<Belts list={theme_style_category} onClick={this.onChangeBeltListId}/>
-				<ModelCategory list={theme_category} onClick={this.onChangeModelListId}/>
 
 				{showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this.selectRecommendation} onClose={this.onClose.bind(this, 'showRecommendation')}/>}
 
@@ -100,11 +106,12 @@ export default class IndexPage extends React.Component {
 					turnDirection={turnDirection}
 					beltLeft={beltMoveX || beltLeft}
 					beltTop={beltMoveY || beltTop}
+					scaleValue={scale}
 					beltWidth={beltWidth}
 					beltHeight={beltHeight}
 					onChange={this.moveBelt}
 				/>
-				{!readGuide && <Guide onClick={this.onReaded}/>}
+				{!readGuide && <Guide onClose={this.onReaded}/>}
 				{/* <Image className={Styles.turnLeft} src={TurnLeft} mode="widthFix" onClick={this.onTurn.bind(this, 'left')}/> */}
 				{/* <Image className={Styles.turnRight} src={TurnRight} mode="widthFix" onClick={this.onTurn.bind(this, 'right')}/> */}
 				<Canvas canvasId={'shareCanvas'} style="width: 540px;height: 921px;position: fixed;top: -2000px;left: -2000px;"/>
@@ -114,6 +121,7 @@ export default class IndexPage extends React.Component {
 
 	// 选择商品
 	selectBelt = (item) => {
+		this.scale = 1
 		wx.getImageInfo({
 			src: IMG_URL + item.image1,
 			success: (res) => {
@@ -142,6 +150,7 @@ export default class IndexPage extends React.Component {
 			this.beltMoveY = 0
 			this.setState({ model: {...item}, beltLeft: item.image1.x * this.beltMultiple / 2, beltTop: item.image1.y * this.beltMultiple / 2, showRecommendation: false})
 		} else {
+			this.scale = 1
 			getImageInfo({
 				src: IMG_URL + item.image1,
 				success: (res) => {
@@ -156,6 +165,7 @@ export default class IndexPage extends React.Component {
 
 	// 更换腰带列表
 	onChangeBeltListId = (item) => {
+		this.scale = 1
 		this.setState({ beltListId: item.id })
 	}
 
@@ -163,9 +173,11 @@ export default class IndexPage extends React.Component {
 		this.setState({ modelListId: item.id })
 	}
 
-	moveBelt = (x, y) => {
+	moveBelt = (x, y, scale) => {
 		this.beltMoveX = x
 		this.beltMoveY = y
+		if (scale) this.scale = scale
+		showToast({ title: scale, icon: 'none' })
 	}
 
 	async getHomeData() {
@@ -192,20 +204,30 @@ export default class IndexPage extends React.Component {
 					modelAll[child].push(it)
 				})
 			})
-			// console.log('x,y', theme[0].image1.x, theme[0].image1.y, this.beltMultiple)
-			this.setState({
-				theme,
-				theme_style,
-				theme_category,
-				theme_style_category,
-				theme_to_style,
-				beltAll,
-				beltListId,
-				beltLeft: theme[0].image1.x * this.beltMultiple / 2,
-				beltTop: theme[0].image1.y * this.beltMultiple / 2,
-				modelAll,
-				model: theme[0] || {},
-				modelListId,
+			this.toLoad([
+					theme[0].image1.image,
+					...(beltAll[beltListId].map(it => (it.image1)) || [])
+				],
+				0,
+				() => {
+					console.log('设置界面数据')
+					// console.log('x,y', theme[0].image1.x, theme[0].image1.y, this.beltMultiple)
+					this.setState({
+						theme,
+						theme_style,
+						theme_category,
+						theme_style_category,
+						theme_to_style,
+						beltAll,
+						beltListId,
+						beltLeft: theme[0].image1.x * this.beltMultiple / 2,
+						beltTop: theme[0].image1.y * this.beltMultiple / 2,
+						modelAll,
+						model: theme[0] || {},
+						modelListId,
+					},
+						() => {this.loadAll()}
+					)
 			})
 		}
 	}
@@ -281,7 +303,7 @@ export default class IndexPage extends React.Component {
 
 	onSave = async () => {
 		const { belt, model, turnDirection, beltWidth, beltHeight, beltLeft, beltTop } = this.state
-		const { beltMoveX, beltMoveY } = this
+		const { beltMoveX, beltMoveY, scale, beltMultiple, windowMultiple, windowWidth } = this
 		if (!getStorageSync('token')) {
 			showToast({ title: '请前往个人中心登录！', icon: 'none' })
 			return
@@ -300,13 +322,13 @@ export default class IndexPage extends React.Component {
 					url: IMG_URL + belt.image1,
 					success: (beltRes) => {
 						// console.log(beltRes.tempFilePath)
-						const canvasMultiple = 540 / this.windowWidth
+						const canvasMultiple = 540 / windowWidth
 						const left = (beltMoveX || beltLeft) * canvasMultiple
 						const top = (beltMoveY || beltTop) * canvasMultiple
-						const width = beltWidth / 2 / this.beltMultiple * this.windowMultiple
-						const height = beltHeight / 2 / this.beltMultiple * this.windowMultiple
+						const width = beltWidth / 2 / beltMultiple * windowMultiple
+						const height = beltHeight / 2 / beltMultiple * windowMultiple
 						modelAndBelt.drawImage(modelRes.tempFilePath, 0, 0, 540, 921)
-						modelAndBelt.drawImage(beltRes.tempFilePath, left, top, width, height)
+						modelAndBelt.drawImage(beltRes.tempFilePath, left, top, width * scale, height * scale)
 						modelAndBelt.draw(false, () => {
 							canvasToTempFilePath({
 								canvasId: 'shareCanvas',
@@ -342,6 +364,43 @@ export default class IndexPage extends React.Component {
 	}
 
 	onReaded = () => {
-		this.setState({readGuide: getStorageSync('readGuide')})
+		this.setState({readGuide: true})
+	}
+
+	loadAll = () => {
+		const {
+			beltAll,
+			modelAll,
+		} = this.state
+		const modelArr = Object.keys(modelAll)
+		const beltArr = Object.keys(beltAll)
+		let allModel = []
+		let allBelt = []
+		modelArr.map(it => {
+			modelAll[it].map(child => {
+				allModel.push(child.image1.image)
+			})
+		})
+		beltArr.map(it => {
+			beltAll[it].map(child => {
+				allBelt.push(child.image1)
+			})
+		})
+		this.toLoad(allModel)
+		this.toLoad(beltArr)
+	}
+
+	toLoad = (arr = [], num = 0, cb) => {
+		if (arr.length === (num + 1)) {
+			if (cb) cb()
+			return
+		}
+		getImageInfo({
+			src: IMG_URL + arr[num],
+			complete: () => {
+				// console.log('load:success', num)
+				this.toLoad(arr, num + 1, cb)
+			}
+		})
 	}
 }

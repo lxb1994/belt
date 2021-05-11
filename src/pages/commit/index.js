@@ -50,7 +50,7 @@ export default class IndexPage extends React.Component {
 					<Image className={Styles.qrcode} src={info.shareImage}/>
 					<View>
 						<Text className={Styles.btn} onClick={this.drawPic}>保存</Text>
-						<Text className={Styles.btn} onClick={this.onBack}>返回</Text>
+						<Text className={[Styles.btn, Styles['btn-gray']]} onClick={this.onBack}>返回</Text>
 					</View>
 				</View>
 

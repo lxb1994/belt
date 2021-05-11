@@ -38,19 +38,19 @@ module.exports.wechat = {
   },
 	tabBar: {
     "color": "#999999",
-    "selectedColor": "#f92557",
+    "selectedColor": "#38383A",
 		list: [
 			{ 
 				pagePath: 'pages/index/index',
 				text: '首页',
-				iconPath: './assets/tabbar/home.jpg',
-				selectedIconPath: './assets/tabbar/home-select.jpg'
+				iconPath: './assets/tabbar/home.png',
+				selectedIconPath: './assets/tabbar/home-select.png'
 			},
 			{ 
 				pagePath: 'pages/mine/index',
 				text: '我的',
-				iconPath: './assets/tabbar/mine.jpg',
-				selectedIconPath: './assets/tabbar/mine-select.jpg'
+				iconPath: './assets/tabbar/mine.png',
+				selectedIconPath: './assets/tabbar/mine-select.png'
 			}
 		]
 	}

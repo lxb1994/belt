@@ -23,7 +23,7 @@ export default class productLists extends React.Component {
 
 	nextClick = () => {
 		const { scollTop } = this.state
-		if (scollTop < (this.props.products.length - 4)) {
+		if (scollTop < (this.props.products.length - 3)) {
 			let num = scollTop + 1
 			this.setState({ scollTop: num })
 		}
@@ -32,7 +32,8 @@ export default class productLists extends React.Component {
 	render() {
 		const { scollTop } = this.state
 		const { products, onClick } = this.props
-		const maxScrollTop = products.length - 4
+		const maxScrollTop = products.length - 3
+		console.log(products)
 		return (
 			<View className={Styles.productBox}>
 				<Image className={`${Styles.arrowBase} ${Styles.pre} ${scollTop === 0 && Styles.disable}`} onClick={this.preClick} src={ArrowBotton}></Image>
@@ -41,7 +42,7 @@ export default class productLists extends React.Component {
 						{
 							products.map(item => (
 								<View className={Styles.listItem} key={item.id} onClick={this._onClick_.bind(this, item)}>
-									<Image className={Styles.itemImage} src={IMG_URL + item.image1.image} mode="aspectFit"/>
+									<Image className={Styles.itemImage} src={IMG_URL + item.image} mode="aspectFit"/>
 								</View>
 							))
 						}

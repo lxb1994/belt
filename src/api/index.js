@@ -62,6 +62,16 @@ const api = {
 		...config
 	}),
 
+	/**
+	 * 获取banner
+	 */
+	 getBanner: (reqData, config) => request.globalRequest({
+		url: '/api/banner',
+		reqData,
+		...config
+	}),
+
+
 	uploadImg: (reqData, config) => request.upload({
 		url: '/api/member/upload',
 		reqData,

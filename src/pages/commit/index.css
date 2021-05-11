@@ -20,10 +20,16 @@
 	width: 183px;
 	height: 53px;
 	line-height: 53px;
-	background: linear-gradient(-65deg, #ED8E4E, #E1624F);
 	border-radius: 7px;
 	font-size: 30px;
 	font-weight: 400;
+	background: #FFFFFF;
+	border: 2rpx solid #9FA0A0;
+	border-radius: 26rpx;
+}
+.btn.btn-gray {
+	background: #38383A;
+	border-color: #38383A;
 	color: #FFFFFF;
 }
 .btn + .btn {

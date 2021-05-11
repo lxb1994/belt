@@ -1,6 +1,6 @@
 .container {
 	position: fixed;
-	bottom: 40px;
+	bottom: 20px;
 	left: 0;
 	right: 0;
 	display: flex;
@@ -16,15 +16,19 @@
 }
 .btn {
 	width: 186px;
-	height: 50px;
-	line-height: 50px;
-	border-radius: 7px;
-	background-color: #000;
-	font-size: 28px;
-	font-weight: 400;
-	color: #FFFFFF;
+	height: 56px;
+	line-height: 56px;
 	text-align: center;
+	display: inline-block;
+	font-size: 30px;
+	font-weight: 400;
+	border-radius: 28rpx;
+	background: rgba(56, 56, 58, 0.8);
+	color: #FFFFFF;
 }
 .btn.primary {
-	background: linear-gradient(-65deg, #61C4E1, #95D6E9);
+	background: #FFFFFF;
+	border: 2rpx solid #9FA0A0;
+	color: #38383A;
+	border: 1px solid #38383A;
 }

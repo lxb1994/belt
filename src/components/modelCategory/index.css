@@ -1,53 +1,73 @@
-.container {
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 250px;
-	margin: 0 24px;
-	background-color: rgba(0, 0, 0, 0.6);
-	height: 90px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+.productBox {
+	width: 160px;
 	box-sizing: border-box;
-	z-index: 5;
+	border-right: 1rpx solid #A5A6A6;
 }
-
-.left, .right {
-	width: 52px;
-	height: 52px;
-	margin: 0 30px;
-}
-
-.content {
-	flex: 1;
-	width: 0;
-	height: 100%;
-	overflow: hidden;
-	position: relative;
-}
-.list {
-	white-space: nowrap;
-	width: 100%;
-	position: relative;
-}
-.item {
-	display: inline-block;
-	font-size: 22px;
-	color: #ffff;
-	width: 33.33%;
-	text-align: center;
-	margin-top: 8px;
-}
-.imageContainer {
-	width: 55px;
-	height: 41px;
-	margin: 0 auto;
+.arrowBase {
+	margin: auto;
+	width: 160px;
+	height: 34px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
+	background: #F5F5F5;
+	border: 1px solid #A5A6A6;
+	box-sizing: border-box;
 }
-.image {
-	height: 44px;
+.arrowIcon {
+	display: inline-block;
+	border-width: 10px;
+	border-style: solid;
+	border-color: transparent transparent #38383A transparent;
+	margin-bottom: 10px;
+}
+.disable {
+	opacity: 0.3;
+}
+.next {
+	transform: rotate(180deg);
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+.listsBox {
+	position: relative;
+	max-height: 136Px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.lists {
+	position: relative;
+	transition: 0.5s;
+}
+.listItem {
+	width: 160px;
+	height: 34Px;
+	box-sizing: border-box;
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: #FFFFFF;
+	border-top: 1rpx solid #A5A6A6;
+	color: #A5A6A6;
+}
+.itemActive {
+	background-color: #38383A;
+	color: #fff;
+}
+.listItem:first-child {
+	border-top: none;
+}
+.itemImage {
+	width: 34px;
+	height: 34px;
+	overflow: hidden;
+	margin-right: 16px;
+}
+.itemTitle {
+	font-size: 26px;
+	font-family: Hiragino Sans GB;
+	font-weight: normal;
+	line-height: 37px;
 }

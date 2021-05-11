@@ -7,15 +7,22 @@
 }
 .planSelectBox{
 	position: absolute;
-	top: 35px;
-	left: 20px;
+	top: 450px;
+	left: 0;
 	display: inline-block;
 	z-index: 2;
 }
 .productListsBox{
 	position: absolute;
-	top: 35px;
+	top: 72px;
 	right: 20px;
+	display: inline-block;
+	z-index: 2;
+}
+.ModelCategory {
+	position: absolute;
+	top: 90px;
+	left: 0;
 	display: inline-block;
 	z-index: 2;
 }

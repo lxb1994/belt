@@ -4,9 +4,6 @@ import { Swiper, SwiperItem, ScrollView } from 'remax/wechat';
 
 import Styles from './index.css';
 
-import Top from '../../assets/arrowtop-white.png'
-import Bottom from '../../assets/arrowbottom-white.png'
-
 import { IMG_URL } from '../../api/config'
 export default class Model extends React.Component {
 	constructor(props) {
@@ -26,6 +23,7 @@ export default class Model extends React.Component {
 
 	render() {
 		const { list, mode } = this.props
+		console.log('list', list)
 		return (
 			<View className={Styles.mask} onClick={this.onClose}>
 				<View className={Styles.modelContainer} onClick={e => e.stopPropagation()}>
