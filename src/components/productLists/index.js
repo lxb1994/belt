@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Image } from 'remax/one';
 import Styles from './index.css';
 import ArrowBotton from '../../assets/icon-arrow.png'
+import { ScrollView } from 'remax/wechat';
 
 import { IMG_URL } from '../../api/config'
 
@@ -35,9 +36,9 @@ export default class productLists extends React.Component {
 		const maxScrollTop = products.length - 4
 		return (
 			<View className={Styles.productBox}>
-				<Image className={`${Styles.arrowBase} ${Styles.pre} ${scollTop === 0 && Styles.disable}`} onClick={this.preClick} src={ArrowBotton}></Image>
-				<View className={Styles.listsBox}>
-					<View className={Styles.lists} style={{top: -scollTop *  150}}>
+				<Image className={`${Styles.arrowBase} ${Styles.pre}`} src={ArrowBotton}></Image>
+				<ScrollView className={Styles.listsBox} scrollY>
+					<View className={Styles.lists}>
 						{
 							products.map(item => (
 								<View className={Styles.listItem} key={item.id} onClick={this._onClick_.bind(this, item)}>
@@ -46,8 +47,8 @@ export default class productLists extends React.Component {
 							))
 						}
 					</View>
-				</View>
-				<Image className={`${Styles.arrowBase} ${Styles.next} ${(scollTop === maxScrollTop || maxScrollTop <= 0) && Styles.disable}`} src={ArrowBotton} onClick={this.nextClick} />
+				</ScrollView>
+				<Image className={`${Styles.arrowBase} ${Styles.next}`} src={ArrowBotton}/>
 			</View>
 		)
 	}

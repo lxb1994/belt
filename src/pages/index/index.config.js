@@ -1,4 +1,4 @@
 module.exports = {
-  navigationBarTitleText: '智能搭',
+  navigationBarTitleText: '服装穿搭仿真',
 	enablePullDownRefresh: true
 };

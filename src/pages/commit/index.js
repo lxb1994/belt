@@ -149,7 +149,7 @@ export default class IndexPage extends React.Component {
 	onSave = (path) => {
 		saveImageToPhotosAlbum({
 			filePath: path,
-			success: () => showToast({title: '保存到相册成功！'}),
+			success: () => showToast({title: '截屏成功，已保存到相册！'}),
 			fail: () => {
 				hideLoading()
 			}

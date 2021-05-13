@@ -30,7 +30,7 @@ export default class Model extends React.Component {
 		const { list, current } = this.state
 		return (
 			<View className={Styles.guide}>
-				<Swiper className={Styles.swiper} indicator-dots indicator-active-color="#38383A" current={current} onChange={this.onChange}>
+				<Swiper className={Styles.swiper} indicator-dots={list.length > 1} indicator-active-color="#38383A" current={current} onChange={this.onChange}>
 					{list.map(item => <SwiperItem className={Styles.swiperItem} key={item.number}>
 						{/* <Image className={Styles.swiperImg} src={item.image} mode="aspectFit"/> */}
 						<Image className={Styles.swiperImg} src={IMG_URL + item.image} mode="aspectFit"/>
@@ -83,7 +83,7 @@ export default class Model extends React.Component {
 		console.log('last')
 		clearTimeout(this.timer)
 		this.timer = null
-		this.props.onClose()
+		// this.props.onClose()
 	}
 
 	next() {

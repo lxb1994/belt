@@ -1,3 +1,3 @@
 module.exports = {
-  navigationBarTitleText: '提交',
+  navigationBarTitleText: '订单详情',
 };

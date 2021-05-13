@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Image, Text } from 'remax/one';
 import Styles from './index.css';
-import ArrowBotton from '../../assets/icon-arrow.png'
+import { ScrollView } from 'remax/wechat';
 
 import { IMG_URL } from '../../api/config'
 
@@ -37,11 +37,11 @@ export default class productLists extends React.Component {
 		const activeId = current || (list[0] && list[0].id)
 		return (
 			<View className={Styles.productBox}>
-				<View className={`${Styles.arrowBase}`} onClick={this.preClick} src={ArrowBotton}>
-					<Text className={`${Styles.arrowIcon} ${scollTop === 0 && Styles.disable}`}></Text>
+				<View className={`${Styles.arrowBase}`}>
+					<Text className={`${Styles.arrowIcon}`}></Text>
 				</View>
-				<View className={Styles.listsBox}>
-					<View className={Styles.lists} style={{top: -scollTop * 34 + 'Px'}}>
+				<ScrollView className={Styles.listsBox} scrollY>
+					<View className={Styles.lists}>
 						{
 							list.map(item => (
 								<View className={`${Styles.listItem} ${activeId === item.id ? Styles.itemActive : ''}`} key={item.id} onClick={this._onClick_.bind(this, item)}>
@@ -51,9 +51,9 @@ export default class productLists extends React.Component {
 							))
 						}
 					</View>
-				</View>
-				<View className={`${Styles.arrowBase}`} onClick={this.nextClick} src={ArrowBotton}>
-					<Text className={`${Styles.arrowIcon} ${Styles.next} ${(scollTop === maxScrollTop || maxScrollTop <= 0) && Styles.disable}`}></Text>
+				</ScrollView>
+				<View className={`${Styles.arrowBase}`}>
+					<Text className={`${Styles.arrowIcon} ${Styles.next}`}></Text>
 				</View>
 			</View>
 		)
