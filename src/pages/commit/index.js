@@ -5,6 +5,7 @@ import Styles from './index.css';
 
 import { IMG_URL } from '../../api/config'
 import Painter from '../../components/painter/painter'
+import Loading from '../../components/loading/index'
 export default class IndexPage extends React.Component {
 	constructor(props) {
 		super(props)
@@ -12,6 +13,7 @@ export default class IndexPage extends React.Component {
 			info: {},
 			imgDraw: {}, //绘制图片的大对象
 			sharePath: '', //生成的分享图
+			loading: false
 		}
 	}
 	
@@ -32,14 +34,13 @@ export default class IndexPage extends React.Component {
 	onReviewImage = () => {
 		const { info } = this.state
 		previewImage({
-			current: info.image || '',
-			urls: [info.image || '']
+			current: IMG_URL + info.image || '',
+			urls: [IMG_URL + info.image || '']
 		})
 	}
 
   render() {
-		// const { location: {query} } = this.props
-		const { info, imgDraw, sharePath } = this.state
+		const { info, imgDraw, loading } = this.state
     return (
 			<View className={Styles.page}>
 				<View className={Styles.container}>
@@ -49,12 +50,13 @@ export default class IndexPage extends React.Component {
 					<View className={Styles.text3}>{info.shareText}</View>
 					<Image className={Styles.qrcode} src={info.shareImage}/>
 					<View>
-						<Text className={Styles.btn} onClick={this.drawPic}>保存</Text>
+						<Text className={Styles.btn} onClick={this.drawPic}>点此截图</Text>
 						<Text className={[Styles.btn, Styles['btn-gray']]} onClick={this.onBack}>返回</Text>
 					</View>
 				</View>
 
 				<Painter style="position: absolute; top: -9999rpx;" palette={imgDraw} times="2" bind:imgOK={this.onImgOK} onImgErr={this.onImgErr}/>
+				{loading && <Loading />}
 			</View>
 		)
   }
@@ -65,7 +67,8 @@ export default class IndexPage extends React.Component {
 			this.onSave(sharePath)
 			return
 		}
-		showLoading({ title: '生成图片中...' })
+		this.setState({loading: true})
+		// showLoading({ title: '生成图片中...' })
 		this.setState({
 			imgDraw: {
 				width: '750rpx',
@@ -90,7 +93,7 @@ export default class IndexPage extends React.Component {
 							top: '448rpx',
 							left: '375rpx',
 							align: 'center',
-							fontSize: '31rpx',
+							fontSize: '24rpx',
 							color: '#838383',
 							maxLines: 1,
 						}
@@ -103,7 +106,7 @@ export default class IndexPage extends React.Component {
 							left: '375rpx',
 							maxLines: 1,
 							align: 'center',
-							fontSize: '21rpx',
+							fontSize: '24rpx',
 							color: '#757575'
 						}
 					},
@@ -126,8 +129,8 @@ export default class IndexPage extends React.Component {
 						type: 'image',
 						url: info.shareImage,
 						css: {
-							top: '777rpx',
-							left: '325rpx',
+							top: '827rpx',
+							left: '245rpx',
 							width: '256rpx',
 							height: '256rpx'
 						}
@@ -143,15 +146,17 @@ export default class IndexPage extends React.Component {
 	}
 	onImgErr = (err) => {
 		hideLoading()
-		console.log('err', err)
 	}
 
 	onSave = (path) => {
 		saveImageToPhotosAlbum({
 			filePath: path,
-			success: () => showToast({title: '截屏成功，已保存到相册！'}),
-			fail: () => {
-				hideLoading()
+			success: () => {
+				this.setState({loading: false})
+				showToast({title: '截屏成功，已保存到相册！'})
+			},
+			complete: () => {
+				this.setState({loading: false})
 			}
 		})
 	}

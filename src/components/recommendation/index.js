@@ -23,7 +23,7 @@ export default class Model extends React.Component {
 
 	render() {
 		const { list, mode } = this.props
-		console.log('list', list)
+		// console.log('list', list)
 		return (
 			<View className={Styles.mask} onClick={this.onClose}>
 				<View className={Styles.modelContainer} onClick={e => e.stopPropagation()}>

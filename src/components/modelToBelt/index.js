@@ -5,6 +5,7 @@ import { MovableArea, MovableView } from 'remax/wechat';
 import Styles from './index.css';
 
 import { IMG_URL } from '../../api/config'
+import WImage from '../../components/wImage'
 export default class Model extends React.Component {
 	constructor(props) {
 		super(props)
@@ -23,25 +24,27 @@ export default class Model extends React.Component {
 	}
 
 	render() {
-		const { model, belt, scaleValue, turnDirection, beltLeft, beltTop, beltWidth, beltHeight } = this.props
+		const { model, belt, scaleValue, turnDirection, beltLeft, beltTop, beltWidth, beltHeight, beltPX } = this.props
+		let relWidth = beltWidth + beltPX + 'px'
+		let relHeight = beltHeight + (beltPX * beltHeight / beltWidth) + 'px'
 		return (
 			<MovableArea id="model-container" className={Styles.modelContainer}>
-				{model.image1 && <Image className={Styles.model} src={IMG_URL + model[`image${turnDirection}`].image} mode="widthFix"/>}
+				{model.image1 && <WImage className={Styles.model} src={model[`image${turnDirection}`].image} previewSrc={model.image} mode="widthFix"/>}
 				<MovableView
-					style={{width: beltWidth + 'px', height: beltHeight + 'px'}}
+					style={{width: relWidth, height: relHeight}}
 					direction="all"
 					x={beltLeft}
 					y={beltTop}
 					onChange={this.onChange}
 					onScale={this.onScale}
-					scale
+					scale={false}
 					scale-value={scaleValue}
 				>
 					{
 						belt.image1 &&
 						<Image
 							className={Styles.belt}
-							style={{width: beltWidth + 'px'}}
+							style={{width: relWidth}}
 							src={IMG_URL + belt[`image${turnDirection}`]}
 							mode="widthFix"
 						/>

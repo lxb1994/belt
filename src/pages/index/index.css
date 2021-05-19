@@ -19,6 +19,19 @@
 	display: inline-block;
 	z-index: 2;
 }
+.beltOperation {
+	position: absolute;
+	top: 770px;
+	right: 20px;
+	z-index: 2;
+	width: 164px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
 .ModelCategory {
 	position: absolute;
 	top: 90px;
@@ -37,4 +50,9 @@
 }
 .turnRight {
 	left: 110px;
+}
+
+.enlargeIcon, .smallerIcon {
+	width: 56px;
+	margin: 10px;
 }

@@ -56,7 +56,7 @@ req.upload = ({
 				...header
       },
 			success: (res) => {
-				switch (res.data.code) {
+				switch (JSON.parse(res.data).code) {
 					case 12:
 						removeStorageSync('token')
 						removeStorageSync('userInfo')

@@ -25,7 +25,6 @@ export default class Mine extends React.Component {
 		}
 	}
 	
-  // 页面组件的 didMount 触发时机是在 onLoad 的时候
   componentDidMount() {
 		showShareMenu({  withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
 		const userInfo = getStorageSync('userInfo') || {}

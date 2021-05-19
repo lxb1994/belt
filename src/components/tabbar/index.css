@@ -17,11 +17,13 @@
 	position: relative;
 	font-size: 32px;
 	font-family: Hiragino Sans GB;
-	font-weight: bold;
+	font-weight: normal;
 	color: #38383A;
 }
-
 .active {
+	font-weight: bold;
+}
+.itemBorder {
 	position: absolute;
 	width: 80rpx;
 	height: 4rpx;

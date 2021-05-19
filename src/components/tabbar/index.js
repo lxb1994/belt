@@ -22,9 +22,9 @@ export default class productLists extends React.Component {
 		return (
 			<View className={Styles.tabbar}>
 				{
-					list.map(item => <View className={Styles.item} key={item.id} onClick={this.onClick.bind(this, item)}>
+					list.map(item => <View className={`${Styles.item} ${item.id === activeId ? Styles.active : ''}`} key={item.id} onClick={this.onClick.bind(this, item)}>
 						{item.title}
-						{item.id === activeId && <Text className={Styles.active}></Text>}
+						{item.id === activeId && <Text className={Styles.itemBorder}></Text>}
 					</View>)
 				}
 			</View>
