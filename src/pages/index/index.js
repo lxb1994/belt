@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, navigateTo, Image } from 'remax/one';
-import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync, hideTabBar } from 'remax/wechat';
+import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync, hideTabBar, getFileInfo, previewImage } from 'remax/wechat';
 import Styles from './index.css';
 
 import ProductLists from '../../components/productLists/index'
@@ -58,6 +58,7 @@ export default class IndexPage extends React.Component {
 		this.windowMultiple = 0
 		this.beltMultiple = 0
 		this.windowWidth = 0
+		this.temPicture = ''
 	}
 
   componentDidMount() {
@@ -135,6 +136,7 @@ export default class IndexPage extends React.Component {
 	// 选择腰带商品
 	selectBelt = (item) => {
 		this.scale = 1
+		this.temPicture = ''
 		wx.getImageInfo({
 			src: IMG_URL + item.image1,
 			success: (res) => {
@@ -148,6 +150,7 @@ export default class IndexPage extends React.Component {
 		// console.log('selectModel', item.image1.x, item.image1.y, this.beltMultiple)
 		this.beltMoveX = 0
 		this.beltMoveY = 0
+		this.temPicture = ''
 		this.setState({
 			model: {...item},
 			beltLeft: item.image1.x * this.beltMultiple / 2,
@@ -161,8 +164,10 @@ export default class IndexPage extends React.Component {
 		if (recommendationMode === 'model') {
 			this.beltMoveX = 0
 			this.beltMoveY = 0
+			this.temPicture = ''
 			this.setState({ model: {...item}, beltLeft: item.image1.x * this.beltMultiple / 2, beltTop: item.image1.y * this.beltMultiple / 2, showRecommendation: false})
 		} else {
+			this.temPicture = ''
 			this.scale = 1
 			getImageInfo({
 				src: IMG_URL + item.image1,
@@ -206,6 +211,7 @@ export default class IndexPage extends React.Component {
 	 * @param {*} scale 
 	 */
 	moveBelt = (x, y, scale) => {
+		this.temPicture = ''
 		this.beltMoveX = x
 		this.beltMoveY = y
 		if (scale) this.scale = scale
@@ -269,9 +275,26 @@ export default class IndexPage extends React.Component {
 		}
 	}
 
-	// 重置腰带
+	// 预览腰带
 	onReset = () => {
-		this.setState({ belt: {} })
+		// this.setState({ belt: {} })
+		// console.log('this.temPicture', this.temPicture)
+		if (this.temPicture) {
+			getFileInfo({
+				filePath: this.temPicture,
+				success: () => {
+					previewImage({
+						current: this.temPicture,
+						urls: [this.temPicture]
+					})
+				},
+				fail: () => {
+					this.onSave('preview')
+				}
+			})
+			return
+		}
+		this.onSave('preview')
 	}
 
 	/**
@@ -300,15 +323,16 @@ export default class IndexPage extends React.Component {
 			})
 			recommendationMode = 'belt'
 		}
+		this.temPicture = ''
 		this.setState({showRecommendation: true, recommendationMode, modelToBelt})
 	}
 
 	/**
 	 * 合成图片
+	 * @param {*} type 是否为预览
 	 */
-	onSave = async () => {
-		const { belt, model, turnDirection, beltWidth, beltHeight, beltLeft, beltTop, beltPX } = this.state
-		const { beltMoveX, beltMoveY, scale, beltMultiple, windowMultiple, windowWidth } = this
+	onSave = async (type) => {
+		const { belt, model } = this.state
 		if (!getStorageSync('token')) {
 			showToast({ title: '请前往个人中心登录！', icon: 'none' })
 			return
@@ -317,6 +341,28 @@ export default class IndexPage extends React.Component {
 			showToast({ title: '请先选择搭配！', icon: 'none' })
 			return
 		}
+		if (this.temPicture && !type) {
+			getFileInfo({
+				filePath: this.temPicture,
+				success: () => {
+					this.onCommit(this.temPicture)
+				},
+				fail: () => {
+					this.onSave()
+				}
+			})
+			return
+		}
+		this.onCompose(type)
+	}
+
+	/**
+	 * 合成图片
+	 * @param {*} type 是否为预览 
+	 */
+	onCompose = (type) => {
+		const { belt, model, turnDirection, beltWidth, beltHeight, beltLeft, beltTop, beltPX } = this.state
+		const { beltMoveX, beltMoveY, scale, beltMultiple, windowMultiple, windowWidth } = this
 		this.setState({loading: true})
 		// showLoading({title: '正在合成...'})
 		const modelAndBelt = createCanvasContext('shareCanvas')
@@ -330,32 +376,28 @@ export default class IndexPage extends React.Component {
 						// console.log(beltRes.tempFilePath)
 						const canvasMultiple = 540 / windowWidth
 						const left = (beltMoveX || beltLeft) * canvasMultiple
-						const top = (beltMoveY || beltTop) * canvasMultiple
+						// 后面90为移动区域的top值
+						const top = ((beltMoveY || beltTop)) * canvasMultiple + 90 * windowMultiple / 2
 						const width = (beltWidth + beltPX) / 2 / beltMultiple * windowMultiple
 						const height = (beltHeight + beltPX * beltHeight / beltWidth) / 2 / beltMultiple * windowMultiple
+						modelAndBelt.fillStyle = '#fff'
+						modelAndBelt.fillRect(0, 0, 540, 921)
 						modelAndBelt.drawImage(modelRes.tempFilePath, 0, 0, 540, 921)
 						modelAndBelt.drawImage(beltRes.tempFilePath, left, top, width, height)
 						modelAndBelt.draw(false, () => {
 							canvasToTempFilePath({
 								canvasId: 'shareCanvas',
 								success: (imgRes) => {
-									Api.uploadImg({filePath: imgRes.tempFilePath}).then(async uploadRes => {
-										if (uploadRes.code !== 1) {
-											showToast({ title: uploadRes.msg, icon: 'none' })
-											this.setState({loading: false})
-											return
-										}
-										let parmas = {
-											theme_id: model.id,
-											theme_style_id: belt.id,
-											image: uploadRes.data.file
-										}
-										let res = await Api.createOrder(parmas)
+									if (type === 'preview') {
+										this.temPicture = imgRes.tempFilePath
+										previewImage({
+											current: imgRes.tempFilePath,
+											urls: [imgRes.tempFilePath]
+										})
 										this.setState({loading: false})
-										if (res.code !== 1) return showToast({ title: res.error, icon: 'none' })
-										setStorageSync('submitInfo', {...parmas, title: belt.title, ...res.data})
-										navigateTo({url: '/pages/commit/index?sn=' + res.data.sn})
-									})
+										return
+									}
+									this.onCommit(imgRes.tempFilePath)
 								},
 								fail: this.onFail.bind(this, '合成失败，请重新尝试！')
 							});
@@ -365,6 +407,30 @@ export default class IndexPage extends React.Component {
 				})
 			},
 			fail: this.onFail
+		})
+	}
+
+	/**
+	 * 请求为个人搭配
+	 */
+	onCommit = (tempFilePath) => {
+		const { belt, model} = this.state
+		Api.uploadImg({filePath: tempFilePath}).then(async uploadRes => {
+			if (uploadRes.code !== 1) {
+				showToast({ title: uploadRes.msg, icon: 'none' })
+				this.setState({loading: false})
+				return
+			}
+			let parmas = {
+				theme_id: model.id,
+				theme_style_id: belt.id,
+				image: uploadRes.data.file
+			}
+			let res = await Api.createOrder(parmas)
+			this.setState({loading: false})
+			if (res.code !== 1) return showToast({ title: res.error, icon: 'none' })
+			setStorageSync('submitInfo', {...parmas, title: belt.title, ...res.data})
+			navigateTo({url: '/pages/commit/index?sn=' + res.data.sn})
 		})
 	}
 
@@ -389,9 +455,9 @@ export default class IndexPage extends React.Component {
 	beltOperation = (type) => {
 		let { beltPX, belt } = this.state
 		if (!belt.id) return
-		console.log('变大')
 		if (type === 'enlarge') beltPX = beltPX + 2
 		if (type === 'smaller') beltPX = beltPX - 2
+		this.temPicture = ''
 		this.setState({beltPX})
 	}
 }

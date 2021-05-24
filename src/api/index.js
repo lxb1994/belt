@@ -78,6 +78,16 @@ const api = {
 		method: 'POST',
 		...config
 	}),
+
+	/**
+	 *  删除搭配
+	 */
+	 delCommit: (reqData, config) => request.globalRequest({
+		url: '/api/tIndent/delete',
+		reqData,
+		method: 'POST',
+		...config
+	}),
 }
 
 export default api

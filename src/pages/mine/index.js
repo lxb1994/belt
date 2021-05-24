@@ -8,6 +8,8 @@ import Share from '../../assets/share.png'
 import History from '../../assets/suggest.png'
 import Customer from '../../assets/service.png'
 
+import Loading from '../../components/loading/index'
+
 import Api from '../../api/index'
 
 export default class Mine extends React.Component {
@@ -21,7 +23,9 @@ export default class Mine extends React.Component {
 				{ name: '分享好友', id: 1, icon: Share, openType: 'share', iconWidth: '28rpx' },
 				{ name: '我的搭配', id: 2, icon: History, link: '/pages/history/index', needLogin: true, iconWidth: '30rpx'},
 				{ name: '联系客服', id: 3, icon: Customer, openType: 'contact', iconWidth: '36rpx' },
-			]
+			],
+			canIUseGetUserProfile: false,
+			loading: false
 		}
 	}
 	
@@ -29,7 +33,7 @@ export default class Mine extends React.Component {
 		showShareMenu({  withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
 		const userInfo = getStorageSync('userInfo') || {}
 		const token = getStorageSync('token') || ''
-		this.setState({userInfo: userInfo || {}, token})
+		this.setState({userInfo: userInfo || {}, token, canIUseGetUserProfile: !!wx.getUserProfile})
   }
 
 	getUserProfile = (e) => {
@@ -49,13 +53,38 @@ export default class Mine extends React.Component {
 								userInfo: userInfo,
 								token: res.data.login_data.fresh_token
 							})
+						} else {
+							showToast({title: res.msg, icon: 'none'})
 						}
 					},
-					fail: () => hideLoading()
+					fail: this.onFail
 				})
-			}
+			},
+			fail: this.onFail
 		})
   }
+
+	getUserInfo = (e) => {
+		showLoading({title: '正在登录...'})
+		wx.login({
+			success: async (loginData) => {
+				const { userInfo } = e.detail
+				let res = await Api.login({type: 2, nickname: userInfo.nickName, head: userInfo.avatarUrl, code: loginData.code})
+				hideLoading()
+				if (res.code === 1) {
+					setStorageSync('token', res.data.login_data.fresh_token)
+					setStorageSync('userInfo', userInfo)
+					this.setState({
+						userInfo: userInfo,
+						token: res.data.login_data.fresh_token
+					})
+				} else {
+					showToast({title: res.msg, icon: 'none'})
+				}
+			},
+			fail: this.onFail
+		})
+	}
 
 	onClickLink(item) {
 		if (item.link) navigateTo({url: item.link});
@@ -68,15 +97,26 @@ export default class Mine extends React.Component {
 	onShareTimeline() {
 		return { title: ' 快来DIY腰饰搭配，秒变时髦“小腰精”！' }
 	}
+	
+	onFail = (text) => {
+		if (text) {
+			showToast({title: text,icon: 'none'})
+			return
+		}
+		hideLoading()
+	}
 
   render() {
-		const { cells, token, canIUse, userInfo } = this.state
+		const { cells, token, canIUse, userInfo, canIUseGetUserProfile, loading } = this.state
     return (
 			<View className={Styles.user}>
 				<View className={`${Styles.userinfo} flex-row`}>
 					{
 						(!token && canIUse)
-						? <Button className={Styles['login-btn']} onTap={this.getUserProfile} type="primary" size="mini"> 点击登录 </Button>
+						?
+							canIUseGetUserProfile
+								? <Button className={Styles['login-btn']} onTap={this.getUserProfile} type="primary" size="mini"> 点击登录 </Button>
+								: <Button className={Styles['login-btn']} type="primary" size="mini" open-type="getUserInfo" onGetUserInfo={this.getUserInfo}> 点击登录 </Button>
 						: <View className='flex-row'>
 							<Image className={Styles['userinfo-avatar']} src={userInfo.avatarUrl} mode="cover" />
 							<Text className={Styles['userinfo-nickname']}>{userInfo.nickName}</Text>
@@ -96,6 +136,8 @@ export default class Mine extends React.Component {
 						)
 					}
 				</View>
+
+				{loading && <Loading />}
 			</View>
 		)
   }

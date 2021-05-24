@@ -79,18 +79,18 @@ export default class IndexPage extends React.Component {
 						type: 'image',
 						url: IMG_URL + info.image,
 						css: {
-							top: '100rpx',
+							top: '50rpx',
 							left: '375rpx',
 							align: 'center',
-							width: '190rpx',
-							height: '324rpx'
+							width: '246rpx',
+							height: '420rpx'
 						},
 					},
 					{
 						type: 'text',
 						text: `搭配单号：${info.sn}`,
 						css: {
-							top: '448rpx',
+							top: '488rpx',
 							left: '375rpx',
 							align: 'center',
 							fontSize: '24rpx',
@@ -102,7 +102,7 @@ export default class IndexPage extends React.Component {
 						type: 'text',
 						text: `产品编号：${info.theme_style_id}`,
 						css: {
-							top: '544rpx',
+							top: '584rpx',
 							left: '375rpx',
 							maxLines: 1,
 							align: 'center',
@@ -114,7 +114,7 @@ export default class IndexPage extends React.Component {
 						type: 'text',
 						text: `${info.shareText}`,
 						css: {
-							top: '636rpx',
+							top: '676rpx',
 							left: '375rpx',
 							align: 'center',
 							textAlign: 'center',
@@ -129,7 +129,7 @@ export default class IndexPage extends React.Component {
 						type: 'image',
 						url: info.shareImage,
 						css: {
-							top: '827rpx',
+							top: '867rpx',
 							left: '245rpx',
 							width: '256rpx',
 							height: '256rpx'
