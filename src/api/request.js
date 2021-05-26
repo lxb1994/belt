@@ -1,5 +1,5 @@
 import { API_URL } from './config'
-import { request, uploadFile, getStorageSync, removeStorageSync } from 'remax/wechat'
+import { request, uploadFile, getStorageSync, removeStorageSync, showToast } from 'remax/wechat'
 
 let req = {}
 req.globalRequest = ({

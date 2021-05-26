@@ -54,7 +54,7 @@ export default class Mine extends React.Component {
 								token: res.data.login_data.fresh_token
 							})
 						} else {
-							showToast({title: res.msg, icon: 'none'})
+							showToast({title: res.msg || '网络波动，请稍后重试！', icon: 'none'})
 						}
 					},
 					fail: this.onFail
@@ -79,7 +79,7 @@ export default class Mine extends React.Component {
 						token: res.data.login_data.fresh_token
 					})
 				} else {
-					showToast({title: res.msg, icon: 'none'})
+					showToast({title: res.msg || '网络波动，请稍后重试！', icon: 'none'})
 				}
 			},
 			fail: this.onFail

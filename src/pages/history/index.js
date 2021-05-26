@@ -43,11 +43,10 @@ export default class Mine extends React.Component {
 				: res.data.list
 			this.pageNo++
 			this.hasMore = !(this.pageNo > 1 && res.data.list.length === 0)
-			// this.setState({list: list})
+			this.setState({list: list})
 		} else {
-			showToast({ title: res.msg, icon: 'none' })
+			showToast({ title: res.msg || '网络波动，请稍后重试！', icon: 'none' })
 		}
-		this.setState({ list: [{ id: 1, theme_title: '123', created_at: '2014-03-13', theme_style_id: '12312123', theme_style_title: '产品名称', image: '/upload/member-img/2021-05-24/ee6b4d4fe38f5569466baaa385b8832a.png' }, { id: 2, theme_title: '123', created_at: '2014-03-13', theme_style_id: '12312123', theme_style_title: '产品名称', image: '/upload/member-img/2021-05-24/ee6b4d4fe38f5569466baaa385b8832a.png' }, { id: 3, theme_title: '123', created_at: '2014-03-13', theme_style_id: '12312123', theme_style_title: '产品名称', image: '/upload/member-img/2021-05-24/ee6b4d4fe38f5569466baaa385b8832a.png' }] })
 	}
 
 	onLoadMore = () => {
@@ -136,9 +135,10 @@ export default class Mine extends React.Component {
 
 	//删除事件
 	onDel = async (item) => {
-		let res = await Api.delCommit({id: item.description})
-		if (res.code !== 1) return showToast({ title: res.msg, icon: 'none' })
+		let res = await Api.delCommit({id: item.id})
+		if (res.code !== 1) return showToast({ title: res.msg || '网络波动，请稍后重试！', icon: 'none' })
 		this.pageNo = 1
+		showToast({title: '删除成功！'})
 		this.getList()
 	}
 }

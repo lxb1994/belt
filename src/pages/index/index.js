@@ -348,7 +348,7 @@ export default class IndexPage extends React.Component {
 					this.onCommit(this.temPicture)
 				},
 				fail: () => {
-					this.onSave()
+					this.onCompose()
 				}
 			})
 			return
@@ -417,7 +417,7 @@ export default class IndexPage extends React.Component {
 		const { belt, model} = this.state
 		Api.uploadImg({filePath: tempFilePath}).then(async uploadRes => {
 			if (uploadRes.code !== 1) {
-				showToast({ title: uploadRes.msg, icon: 'none' })
+				showToast({ title: uploadRes.msg || '网络波动，请稍后重试！', icon: 'none' })
 				this.setState({loading: false})
 				return
 			}
@@ -428,7 +428,7 @@ export default class IndexPage extends React.Component {
 			}
 			let res = await Api.createOrder(parmas)
 			this.setState({loading: false})
-			if (res.code !== 1) return showToast({ title: res.error, icon: 'none' })
+			if (res.code !== 1) return showToast({ title: res.msg || '网络波动，请稍后重试！', icon: 'none' })
 			setStorageSync('submitInfo', {...parmas, title: belt.title, ...res.data})
 			navigateTo({url: '/pages/commit/index?sn=' + res.data.sn})
 		})
@@ -438,7 +438,7 @@ export default class IndexPage extends React.Component {
 	 * 失败提示语
 	 */
 	onFail(text) {
-		if (text) showToast({title: text,icon: 'none'})
+		if (text) showToast({title: text || '网络波动，请稍后重试！',icon: 'none'})
 		this.setState({loading: false})
 	}
 

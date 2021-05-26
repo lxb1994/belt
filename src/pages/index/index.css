@@ -54,5 +54,8 @@
 
 .enlargeIcon, .smallerIcon {
 	width: 56px;
-	margin: 10px;
+}
+.enlargeIcon {
+	margin-top: 24px;
+	margin-bottom: 24px;
 }
