@@ -74,7 +74,7 @@ export default class IndexPage extends React.Component {
 			success: (res) => {
 				this.windowWidth = res.windowWidth
 				this.windowMultiple = res.windowWidth / 375
-				this.beltMultiple = res.windowWidth * 2 / 1080
+				this.beltMultiple = res.windowWidth * 2 / 1060
 				this.getHomeData();
 			}
 		})
@@ -125,7 +125,7 @@ export default class IndexPage extends React.Component {
 					onChange={this.moveBelt}
 				/>
 				{!readGuide && <Guide />}
-				<Canvas canvasId={'shareCanvas'} style="width: 540px;height: 921px;position: fixed;top: -2000px;left: -2000px;"/>
+				<Canvas canvasId={'shareCanvas'} style="width: 530px;height: 760px;position: fixed;top: -2000px;left: -2000px;"/>
 
 				<PreloadImgs list={preloadImgList} onLoadAll={this.onLoadAll}/>
 				{loading && <Loading />}
@@ -374,15 +374,15 @@ export default class IndexPage extends React.Component {
 					url: IMG_URL + belt.image1,
 					success: (beltRes) => {
 						// console.log(beltRes.tempFilePath)
-						const canvasMultiple = 540 / windowWidth
+						const canvasMultiple = 530 / windowWidth
 						const left = (beltMoveX || beltLeft) * canvasMultiple
-						// 后面90为移动区域的top值
-						const top = ((beltMoveY || beltTop)) * canvasMultiple + 90 * windowMultiple / 2
+						// 后面72为移动区域的top值
+						const top = ((beltMoveY || beltTop)) * canvasMultiple
 						const width = (beltWidth + beltPX) / 2 / beltMultiple * windowMultiple
 						const height = (beltHeight + beltPX * beltHeight / beltWidth) / 2 / beltMultiple * windowMultiple
 						modelAndBelt.fillStyle = '#fff'
-						modelAndBelt.fillRect(0, 0, 540, 921)
-						modelAndBelt.drawImage(modelRes.tempFilePath, 0, 0, 540, 921)
+						modelAndBelt.fillRect(0, 0, 530, 760)
+						modelAndBelt.drawImage(modelRes.tempFilePath, 0, 0, 530, 760)
 						modelAndBelt.drawImage(beltRes.tempFilePath, left, top, width, height)
 						modelAndBelt.draw(false, () => {
 							canvasToTempFilePath({
@@ -453,10 +453,13 @@ export default class IndexPage extends React.Component {
 	}
 
 	beltOperation = (type) => {
-		let { beltPX, belt } = this.state
+		let { beltPX, belt, beltWidth } = this.state
 		if (!belt.id) return
-		if (type === 'enlarge') beltPX = beltPX + 2
-		if (type === 'smaller') beltPX = beltPX - 2
+		// 最多变化为腰带大小2倍
+		const maxWidth = beltWidth
+		const minWidth = -beltWidth / 3 * 1
+		if (type === 'enlarge' && beltPX < maxWidth) beltPX = beltPX + 2
+		if (type === 'smaller' && beltPX > minWidth) beltPX = beltPX - 2
 		this.temPicture = ''
 		this.setState({beltPX})
 	}

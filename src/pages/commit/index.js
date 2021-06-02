@@ -44,7 +44,7 @@ export default class IndexPage extends React.Component {
     return (
 			<View className={Styles.page}>
 				<View className={Styles.container}>
-					<Image className={Styles.image} src={IMG_URL + info.image} onTap={this.onReviewImage} mode="widthFix"/>
+					<Image className={Styles.image} src={IMG_URL + info.image} onTap={this.onReviewImage} mode="heightFix"/>
 					<View className={Styles.text1}>搭配单号：{info.sn}</View>
 					<View className={Styles.text2}>产品编号：{info.title}</View>
 					<View className={Styles.text3}>{info.shareText}</View>
@@ -72,7 +72,7 @@ export default class IndexPage extends React.Component {
 		this.setState({
 			imgDraw: {
 				width: '750rpx',
-				height: '1334rpx',
+				height: '1234rpx',
 				background: '#fff',
 				views: [
 					{
@@ -83,7 +83,7 @@ export default class IndexPage extends React.Component {
 							left: '375rpx',
 							align: 'center',
 							width: '246rpx',
-							height: '420rpx'
+							height: '352.74rpx'
 						},
 					},
 					{
