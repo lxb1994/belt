@@ -4,7 +4,7 @@ import { Canvas } from 'remax/ali'
 
 import Styles from './index.css' 
 
-export default class MinePage extends Component {
+export default class HistoryPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {}
