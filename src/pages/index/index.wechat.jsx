@@ -69,7 +69,7 @@ export default class IndexPage extends React.Component {
 		this._onCommit = onCommit.bind(this)
 		this._selectRecommendation = selectRecommendation.bind(this)
 		this._onClose = onClose.bind(this)
-		this.__moveBelt = moveBelt.bind(this)
+		this._moveBelt = moveBelt.bind(this)
 		this._beltOperationSmaller = beltOperation.bind(this, 'smaller')
 		this._beltOperationEnLarger = beltOperation.bind(this, 'enlarge')
 		this._onIntelligence = onIntelligence.bind(this)

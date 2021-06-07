@@ -13,7 +13,7 @@ export default class IndexPage extends Component {
 	render() {
 		return (
 			<View>
-
+123
 			</View>
 		)
 	}

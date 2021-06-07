@@ -2,6 +2,7 @@ import API from './api'
 
 const isAli = process.env.REMAX_PLATFORM === 'ali'
 const isWechat = process.env.REMAX_PLATFORM === 'wechat'
+const PLATFORM_NAME = process.env.REMAX_PLATFORM
 
 class Utils {
 	static stopPullDownRefresh() {
@@ -94,6 +95,14 @@ class Utils {
 	static sleep(sec = 0.2) {
 		return new Promise(resolve => {
 			setTimeout(() => resolve(), sec * 1000)
+		})
+	}
+
+	static saveImageToPhotosAlbum(obj = {showActionSheet: true, filePath: '' }) {
+		const FuncName = {ali: 'saveImage', wechat: 'saveImageToPhotosAlbum'}
+		const _obj = isAli ? obj : {filePath: obj.filePath}
+		return new Promise(resolve => {
+			API[FuncName[PLATFORM_NAME]]({ ..._obj, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
 		})
 	}
 }

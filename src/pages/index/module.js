@@ -110,7 +110,6 @@ export async function onChangeBeltListId(item) {
  */
 export async function onReset() {
 	// this.setState({ belt: {} })
-	// console.log('this.temPicture', this.temPicture)
 	if (!this.temPicture) return this._onSave('preview')
 	const _res = await Utils.getFileInfo({ filePath: this.temPicture, digestAlgorithm: 'md5' })
 	if (_res.code !== 200) return this._onSave('preview')

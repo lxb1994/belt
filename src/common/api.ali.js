@@ -1,4 +1,4 @@
-import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync } from 'remax/ali'
+import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage } from 'remax/ali'
 
 export default {
 	stopPullDownRefresh,
@@ -12,4 +12,5 @@ export default {
 	createCanvasContext,
 	downloadFile,
 	getStorageSync,
+	saveImage
 }
