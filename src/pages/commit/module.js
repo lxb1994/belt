@@ -107,7 +107,7 @@ export async function onSave(filePath){
 	const res = await Utils.saveImageToPhotosAlbum({filePath})
 	this.setState({loading: false})
 	console.log('res', res.code)
-	if (res.code !== 200) return Utils.showToast({title: '截屏失败，已保存到相册！'})
+	if (res.code !== 200) return Utils.showToast({title: '截屏失败！', icon: 'none'})
 	Utils.showToast({title: '截屏成功，已保存到相册！'})
 }
 
