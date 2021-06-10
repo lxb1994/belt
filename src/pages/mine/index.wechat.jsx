@@ -37,7 +37,7 @@ export default class Mine extends React.Component {
 	}
 
   componentDidMount() {
-		showShareMenu({  withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
+		showShareMenu({  withShareTicket: true, menus: [ 'shareAppMessage', 'shareTimeline' ] })
 		const userInfo = getStorageSync('userInfo') || {}
 		const token = getStorageSync('token') || ''
 		this.setState({ userInfo: userInfo || {}, token, canIUseGetUserProfile: !!wx.getUserProfile })
@@ -57,11 +57,7 @@ export default class Mine extends React.Component {
 			<View className={Styles.user}>
 				<View className={`${Styles.userinfo} flex-row`}>
 					{
-						(!token && canIUse)
-						?
-							canIUseGetUserProfile
-								? <Button className={Styles['login-btn']} onTap={this._getUserProfile} type="primary" size="mini"> 点击登录 </Button>
-								: <Button className={Styles['login-btn']} type="primary" size="mini" open-type="getUserInfo" onGetUserInfo={this._getUserInfo}> 点击登录 </Button>
+						(!token && canIUse) ?  canIUseGetUserProfile ? <Button className={Styles['login-btn']} onTap={this._getUserProfile} type="primary" size="mini"> 点击登录 </Button> : <Button className={Styles['login-btn']} type="primary" size="mini" open-type="getUserInfo" onGetUserInfo={this._getUserInfo}> 点击登录 </Button>
 						: <View className='flex-row'>
 							<Image className={Styles['userinfo-avatar']} src={userInfo.avatarUrl} mode="cover" />
 							<Text className={Styles['userinfo-nickname']}>{userInfo.nickName}</Text>
