@@ -96,7 +96,7 @@ class Utils {
 				// _obj.canvas = obj.canvas
 				API.canvasToTempFilePath({ ..._obj, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
 			}
-			if (ISALI) obj.ctx.toTempFilePath({ ...obj, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
+			if (ISALI) obj.ctx.toTempFilePath({ ...obj, success: res => resolve({ code: 200, data: {...res, tempFilePath: res.filePath} }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
 		})
 	}
 

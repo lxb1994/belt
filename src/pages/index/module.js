@@ -2,6 +2,7 @@ import Utils from '../../common/utils'
 import { PLATFORM } from '../../common/constants'
 import Api from '../../api/index'
 import { IMG_URL } from '../../api/config'
+import { ISALI } from '../../common/constants'
 
 const MODEL_WIDTH = 530
 const MODEL_HEIGHT = 760
@@ -253,6 +254,8 @@ export async function onCompose(type) {
 	if (_downloadFileModelRes.code !== 200 || _downloadFileBeltRes.code !== 200) this._onFail()
 
 	// console.log(beltRes.tempFilePath)
+	const ModelImage = ISALI ? IMG_URL + model.image1.image : _downloadFileModelRes.data.tempFilePath
+	const BeltImage = ISALI ? IMG_URL + belt.image1 : _downloadFileBeltRes.data.tempFilePath
 	const canvasMultiple = MODEL_WIDTH / windowWidth
 	const left = (beltMoveX || beltLeft) * canvasMultiple
 	const top = ((beltMoveY || beltTop)) * canvasMultiple
@@ -260,8 +263,8 @@ export async function onCompose(type) {
 	const height = (beltHeight + beltPX * beltHeight / beltWidth) / 2 / beltMultiple * windowMultiple
 	modelAndBelt.fillStyle = '#fff'
 	modelAndBelt.fillRect(0, 0, MODEL_WIDTH, MODEL_HEIGHT)
-	modelAndBelt.drawImage(_downloadFileModelRes.data.tempFilePath, 0, 0, MODEL_WIDTH, MODEL_HEIGHT)
-	modelAndBelt.drawImage(_downloadFileBeltRes.data.tempFilePath, left, top, width, height)
+	modelAndBelt.drawImage(ModelImage, 0, 0, MODEL_WIDTH, MODEL_HEIGHT)
+	modelAndBelt.drawImage(BeltImage, left, top, width, height)
 	modelAndBelt.draw(false)
 	await Utils.sleep(1)
 	const _tempPathRes = await Utils.canvasToTempFilePath({ ctx: modelAndBelt, canvasId: 'shareCanvas', width: MODEL_WIDTH, height: MODEL_HEIGHT, destWidth: MODEL_WIDTH, destHeight: MODEL_HEIGHT, fileType: 'png' } )
