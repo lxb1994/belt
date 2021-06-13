@@ -1,5 +1,5 @@
 import { API_URL } from './config'
-import { request, uploadFile, getStorageSync, removeStorageSync, showToast } from 'remax/wechat'
+import Utils from '../common/utils'
 
 let req = {}
 req.globalRequest = ({
@@ -12,9 +12,9 @@ req.globalRequest = ({
     'Content-Type': 'application/json',
     ...header
   };
-	const token = getStorageSync('token') || ''
+	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
-		request({
+		Utils.request({
 			url: `${API_URL}${url}`,
 			data: {...reqData, token},
 			method,
@@ -22,12 +22,9 @@ req.globalRequest = ({
 			success: (res) => {
 				switch (res.data.code) {
 					case 12:
-						removeStorageSync('token')
-						removeStorageSync('userInfo')
-						break
 					case 13:
-						removeStorageSync('token')
-						removeStorageSync('userInfo')
+						Utils.removeStorageSync('token')
+						Utils.removeStorageSync('userInfo')
 						break;
 				}
 				reslove(res.data)
@@ -44,9 +41,9 @@ req.upload = ({
 	reqData = { filePath: '', formData: {}, name: '' },
 	header = {},
 }) => {
-	const token = getStorageSync('token') || ''
+	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
-		uploadFile({
+		Utils.uploadFile({
 			url: `${API_URL}${url}`,
 			filePath: reqData.filePath,
 			name: reqData.name || 'file',
@@ -57,13 +54,9 @@ req.upload = ({
       },
 			success: (res) => {
 				switch (JSON.parse(res.data).code) {
-					case 12:
-						removeStorageSync('token')
-						removeStorageSync('userInfo')
-						break
 					case 13:
-						removeStorageSync('token')
-						removeStorageSync('userInfo')
+						Utils.removeStorageSync('token')
+						Utils.removeStorageSync('userInfo')
 						break;
 				}
 				reslove(JSON.parse(res.data))

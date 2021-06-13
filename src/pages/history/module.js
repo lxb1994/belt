@@ -69,12 +69,12 @@ export async function getList() {
 	// showLoading({title: '正在加载...'})
 	let res = await Api.getVisitHistory({ page: this.pageNo, count: pageSize })
 	this.isLoading = true
-	this.setState({ loading: false })
+	this.setState({ loading: false, list: [{id: 1, title: '123'}, {id: 2, title: '456'}] })
 	if (res.code !== 1) return Utils.showToast({ title: res.msg || '网络波动，请稍后重试！', icon: 'none' })
-	list = this.pageNo > 1 ? list.concat(res.data.list) : res.data.list
-	this.pageNo++
-	this.hasMore = !(this.pageNo > 1 && res.data.list.length === 0)
-	this.setState({list: list})
+	// list = this.pageNo > 1 ? list.concat(res.data.list) : res.data.list
+	// this.pageNo++
+	// this.hasMore = !(this.pageNo > 1 && res.data.list.length === 0)
+	// this.setState({list: list})
 }
 
 /**

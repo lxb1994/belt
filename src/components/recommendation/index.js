@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Image } from 'remax/one';
-import { Swiper, SwiperItem, ScrollView } from 'remax/wechat';
+import ScrollView from '../ScrollView'
 
 import Styles from './index.css';
 

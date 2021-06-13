@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Image } from 'remax/one';
-import { MovableArea, MovableView } from 'remax/wechat';
+import Movable from '../Movable'
 
 import Styles from './index.css';
 
@@ -28,9 +28,9 @@ export default class Model extends React.Component {
 		let relWidth = beltWidth + beltPX + 'px'
 		let relHeight = beltHeight + (beltPX * beltHeight / beltWidth) + 'px'
 		return (
-			<MovableArea id="model-container" className={Styles.modelContainer}>
+			<Movable.Area id="model-container" className={Styles.modelContainer}>
 				{model.image1 && <WImage className={Styles.model} src={model[`image${turnDirection}`].image} previewSrc={model.image} mode="widthFix"/>}
-				<MovableView
+				<Movable.View
 					style={{width: relWidth, height: relHeight}}
 					direction="all"
 					x={beltLeft}
@@ -49,8 +49,8 @@ export default class Model extends React.Component {
 							mode="widthFix"
 						/>
 					}
-				</MovableView>
-			</MovableArea>
+				</Movable.View>
+			</Movable.Area>
 		)
 	}
 }

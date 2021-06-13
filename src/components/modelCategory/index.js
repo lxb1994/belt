@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Image, Text } from 'remax/one';
 import Styles from './index.css';
-import { ScrollView } from 'remax/wechat';
+import ScrollView from '../ScrollView'
 
 import { IMG_URL } from '../../api/config'
 import ArrowBotton from '../../assets/icon-arrow.png'
@@ -17,29 +17,6 @@ export default class productLists extends React.Component {
 			isUpdateGroup: true
 		}
 	}
-	// componentWillReceiveProps(nextProps) {
-	// 	if (JSON.stringify(nextProps.list) !== JSON.stringify(this.props.list)) {
-	// 		this.setState({isUpdateGroup: false, group: {}})
-	// 	}
-	// }
-
-	// componentDidUpdate() {
-	// 	if (!this.state.isUpdateGroup) {
-	// 		const {current} = this.state
-	// 		const {list, models} = this.props
-	// 		const activeId = current || (list[0] && list[0].id)
-	// 		let group = {}
-	// 		console.log(`.listBox-${activeId}`)
-	// 		models[activeId].map((item, i) => {
-	// 			let id = item.id
-	// 			wx.createIntersectionObserver().relativeTo(`.listBox-${activeId}`,{bottom: 30}).observe('.item-'+ id, (ret) => {
-	// 				console.log('ret', id, group[id] || ret.intersectionRatio > 0)
-	// 				group[id] = group[id] || ret.intersectionRatio > 0
-	// 				this.setState({group, isUpdateGroup: true})
-	// 			})
-	// 		})
-	// 	}
-	// }
 
 	render() {
 		const { group, current, modelId} = this.state
