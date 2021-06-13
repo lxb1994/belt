@@ -15,7 +15,7 @@ export default class productLists extends React.Component {
 	render() {
 		return (
 			<View className={Styles.mask}>
-				<Image className={Styles.loading} src={ICON_LOADING} mode='widthFix' />
+				<Image className={Styles.loading} src={ICON_LOADING} mode="widthFix"/>
 			</View>
 		)
 	}

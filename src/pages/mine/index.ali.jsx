@@ -7,6 +7,8 @@ import Share from '../../assets/share.png'
 import History from '../../assets/suggest.png'
 import Customer from '../../assets/service.png'
 
+import Loading from '../../components/loading/index'
+
 import Styles from './index.css'
 import {} from './module.js'
 
@@ -35,7 +37,7 @@ export default class MinePage extends Component {
   }
 
 	render() {
-		const { token, canIUse, userInfo } = this.state
+		const { userInfo, token, canIUse, loading } = this.state
 		return (
 			<View className={Styles.user}>
 				<View className={`${Styles.userinfo} flex-row`}>
@@ -49,6 +51,8 @@ export default class MinePage extends Component {
 				</View>
 				<View className={Styles.cells}>
 				</View>
+
+				{ loading && <Loading /> }
 			</View>
 		)
 	}
