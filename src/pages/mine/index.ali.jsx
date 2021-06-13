@@ -29,7 +29,6 @@ export default class MinePage extends Component {
 	}
 
 	componentDidMount() {
-		console.log('123')
   }
 
 	render() {
