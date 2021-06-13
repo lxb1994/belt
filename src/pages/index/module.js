@@ -1,4 +1,5 @@
 import Utils from '../../common/utils'
+import { PLATFORM } from '../../common/constants'
 import Api from '../../api/index'
 import { IMG_URL } from '../../api/config'
 
@@ -244,6 +245,7 @@ export async function onSave(type) {
 export async function onCompose(type) {
 	const { belt, model, turnDirection, beltWidth, beltHeight, beltLeft, beltTop, beltPX } = this.state
 	const { beltMoveX, beltMoveY, scale, beltMultiple, windowMultiple, windowWidth } = this
+	const _platform = { wechat: 'tempFilePath', ali: 'filePath' }
 	this.setState({ loading: true })
 	// showLoading({title: '正在合成...'})
 	const modelAndBelt = Utils.createCanvasContext('shareCanvas')
@@ -264,12 +266,13 @@ export async function onCompose(type) {
 	await Utils.sleep(1)
 	const _tempPathRes = await Utils.canvasToTempFilePath({ ctx: modelAndBelt, canvasId: 'shareCanvas', width: MODEL_WIDTH, height: MODEL_HEIGHT, destWidth: MODEL_WIDTH, destHeight: MODEL_HEIGHT, fileType: 'png' } )
 	if (_tempPathRes.code !== 200) return this._onFail('合成失败，请重新尝试！')
+	const _filePath = _tempPathRes.data[_platform[PLATFORM]]
 	if (type === 'preview') {
-		this.temPicture = _tempPathRes.data.tempFilePath
-		Utils.previewImage({ urls: [ _tempPathRes.data.tempFilePath ], current: 0, showMenu: true })
+		this.temPicture = _filePath
+		Utils.previewImage({ urls: [ _filePath ], current: 0, showMenu: true })
 		return this.setState({ loading: false })
 	}
-	this._onCommit(_tempPathRes.data.tempFilePath)
+	this._onCommit(this.temPicture)
 }
 
 /*
