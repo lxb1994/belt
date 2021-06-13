@@ -2,10 +2,13 @@ import * as React from 'react';
 import { View, Image } from 'remax/one';
 import Styles from './index.css';
 import ArrowBotton from '../../assets/icon-arrow.png'
-import { ScrollView, showToast } from 'remax/wechat';
+import ScrollView from '../ScrollView'
 
 import { IMG_URL } from '../../api/config'
 
+import { onLazyLoad } from './module'
+
+const isAli = process.env.REMAX_PLATFORM === 'ali'
 export default class productLists extends React.Component {
 	constructor(props) {
 		super(props)
@@ -13,6 +16,8 @@ export default class productLists extends React.Component {
 			group: {},
 			isUpdateGroup: true
 		}
+
+		this._onLazyLoad = onLazyLoad.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -23,17 +28,7 @@ export default class productLists extends React.Component {
 
 	componentDidUpdate() {
 		if (!this.state.isUpdateGroup) {
-			let group = {}
-			this.props.products.map((item, i) => {
-				let id = item.id
-				wx.createIntersectionObserver().relativeTo('.listBox',{bottom: 30}).observe('.item-'+ item.id, (ret) => {
-					let baseGroup = this.state.group
-					group[id] = group[id] || ret.intersectionRatio > 0
-					if (group[id] !== baseGroup[id]) {
-						this.setState({group: {...baseGroup,...group}, isUpdateGroup: true})
-					}
-				})
-			})
+			this._onLazyLoad()
 		}
 	}
 
@@ -48,8 +43,7 @@ export default class productLists extends React.Component {
 						{
 							products.map((item, i) => (
 								<View className={`${Styles.listItem} item-${item.id}`} key={item.id} onClick={this._onClick_.bind(this, item)}>
-									{group[i]}
-									<Image className={Styles.itemImage} src={group[item.id] ? IMG_URL + item.cover : ''} mode="aspectFit"/>
+									<Image className={Styles.itemImage} src={(group[item.id] || isAli) ? IMG_URL + item.cover : ''} mode="aspectFit" lazy-load/>
 								</View>
 							))
 						}

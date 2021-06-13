@@ -1,4 +1,5 @@
 import Utils from '../../common/utils'
+import { navigateBack } from 'remax/one'
 import Api from '../../api/index'
 import { IMG_URL } from '../../api/config'
 
@@ -115,7 +116,7 @@ export async function onSave(filePath){
  * 返回按钮
  */
 export function onBack() {
-	Utils.navigateBack({delta: 1})
+	navigateBack({delta: 1})
 }
 
 /**

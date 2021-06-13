@@ -63,6 +63,13 @@ class Utils {
 		})
 	}
 
+	static removeStorageSync(key = '') {
+		let _res = null
+		if (ISALI) _res = API.removeStorageSync({ key })
+		if (ISWECHAT) _res = API.removeStorageSync(key)
+		return _res
+	}
+
 	static navigateTo(obj = { url: '', event: {} }) {
 		return new Promise(resolve => {
 			const _obj = ISALI ? { url: obj.url } : obj
@@ -128,6 +135,21 @@ class Utils {
 	static hideLoading(obj = { page: '' }) {
 		const _obj = ISALI ? obj : null
 		return API.hideLoading(_obj)
+	}
+
+	static request(obj = { url: '', data: {}, method: '', header: {} }) {
+		const _obj = isAli ? {...obj, body: obj.data} : obj
+		return API.request(_obj)
+	}
+
+	static uploadFile(obj = { url: '', name: '', formData: {}, header: {}, filePath: '' }) {
+		const _obj = isAli ? {url: obj.url, fileName: obj.name, fileType: obj.fileType || 'image', filePath: '' } : obj
+		return API.uploadFile(_obj)
+	}
+
+	static showShareMenu(obj = {withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline']}) {
+		const _obj = isAli ? '' : obj
+		return API.showShareMenu(_obj)
 	}
 }
 

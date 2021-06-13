@@ -1,5 +1,4 @@
-import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage, showLoading, hideLoading } from 'remax/ali'
-
+import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage, showLoading, hideLoading, removeStorageSync, uploadFile, request } from 'remax/ali'
 export default {
 	stopPullDownRefresh,
 	getFileInfo,
@@ -16,4 +15,8 @@ export default {
 	getUserProfile: my.authorize,
 	showLoading,
 	hideLoading,
+	removeStorageSync,
+	uploadFile,
+	request,
+	showShareMenu: () => {}
 }

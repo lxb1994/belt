@@ -280,3 +280,6 @@ export function onFail(text) {
 	this.setState({ loading: false })
 }
 
+export function showShareMenu(params) {
+	Utils.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
+}

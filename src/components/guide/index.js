@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Image } from 'remax/one';
-import { hideTabBar, setStorageSync, Swiper, SwiperItem, switchTab } from 'remax/wechat';
+import Swiper from '../Swiper'
 
 import Styles from './index.css';
 import { IMG_URL } from '../../api/config'
@@ -24,13 +24,13 @@ export default class Model extends React.Component {
 		const { list, current } = this.state
 		return (
 			<View className={Styles.guide}>
-				<Swiper className={Styles.swiper} indicator-dots={list.length > 1} indicator-active-color="#38383A">
-					{list.map(item => <SwiperItem className={Styles.swiperItem} key={item.number}>
+				<Swiper.Box className={Styles.swiper} indicator-dots={list.length > 1} indicator-active-color="#38383A">
+					{list.map(item => <Swiper.Item className={Styles.swiperItem} key={item.number}>
 						{/* <Image className={Styles.swiperImg} src={item.image} mode="aspectFit"/> */}
 						<Image className={Styles.swiperImg} src={IMG_URL + item.image} mode="aspectFit"/>
-					</SwiperItem>)
+					</Swiper.Item>)
 					}
-				</Swiper>
+				</Swiper.Box>
 			</View>
 		)
 	}

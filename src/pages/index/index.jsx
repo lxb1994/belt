@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { View, Image, navigateTo } from 'remax/one'
-import { Canvas, showLoading, getImageInfo, hideLoading, canvasToTempFilePath, createCanvasContext, showToast, getStorageSync, stopPullDownRefresh, showShareMenu, setStorageSync, hideTabBar, getFileInfo, previewImage } from 'remax/wechat'
+import { View, Image } from 'remax/one'
+import Canvas from '../../components/Canvas'
 
 import ProductLists from '../../components/productLists/index'
 // import ModelLists from '../../components/ModelLists/index'
@@ -16,11 +16,7 @@ import Loading from '../../components/loading/index'
 import ICON_ENLARGE from '../../assets/enlarge.png'
 import ICON_SMALLER from '../../assets/smaller.png'
 
-import { IMG_URL } from '../../api/config'
-
-import Api from '../../api/index'
-
-import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail } from './module.js'
+import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail, showShareMenu } from './module.js'
 import Styles from './index.css'
 
 const MODEL_WIDTH = 530
@@ -76,6 +72,7 @@ export default class IndexPage extends React.Component {
 		this._onSave = onSave.bind(this)
 		this._onCompose = onCompose.bind(this)
 		this._onFail = onFail.bind(this)
+		this._showShareMenu = showShareMenu.bind(this)
 
 		this.beltMoveX = 0
 		this.beltMoveY = 0
@@ -87,7 +84,7 @@ export default class IndexPage extends React.Component {
 	}
 
   componentDidMount() {
-		showShareMenu({ withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
+		this._showShareMenu()
   }
 
 	onShow() {

@@ -1,5 +1,6 @@
 import Utils from '../../common/utils'
 import { ISWECHAT } from '../../common/constants'
+import Api from '../../api/index'
 
 export async function getUserProfileFunc(e) {
 	let _token = ''
@@ -11,7 +12,7 @@ export async function getUserProfileFunc(e) {
 	if (ISWECHAT) {
 		const _loginRes = await Utils.login()
 		if (_loginRes.code !== 200) return this._onFail(_loginRes.data || '登陆失败：02')
-		const { userInfo } = _loginRes.data
+		const { userInfo } = _userInfoRes.data
 		const _apiRes = await Api.login({ type: 2, nickname: userInfo.nickName, head: userInfo.avatarUrl, code: _loginRes.data.code })
 		Utils.hideLoading()
 		if (_apiRes.code !== 1) return this._onFail(_apiRes.msg || '网络波动，请稍后重试！')

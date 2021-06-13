@@ -1,4 +1,4 @@
-import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, canvasToTempFilePath, getStorageSync, saveImageToPhotosAlbum, showLoading, hideLoading } from 'remax/wechat'
+import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, canvasToTempFilePath, getStorageSync, saveImageToPhotosAlbum, showLoading, hideLoading, request, uploadFile, removeStorageSync, showShareMenu } from 'remax/wechat'
 
 export default {
 	stopPullDownRefresh,
@@ -18,4 +18,8 @@ export default {
 	login: wx.login,
 	showLoading,
 	hideLoading,
+	request,
+	uploadFile,
+	removeStorageSync,
+	showShareMenu
 }
