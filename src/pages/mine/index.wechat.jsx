@@ -12,7 +12,7 @@ import Loading from '../../components/loading/index'
 import Api from '../../api/index'
 
 import Styles from './index.css'
-import { getUserProfileFunc, getUserInfo, onClickLink, onFail } from './module.js'
+import { getUserProfileFunc, getUserInfo, onClickLink, onFail } from './module'
 
 export default class Mine extends React.Component {
 	constructor(props) {

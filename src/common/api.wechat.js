@@ -21,5 +21,7 @@ export default {
 	request,
 	uploadFile,
 	removeStorageSync,
-	showShareMenu
+	showShareMenu,
+	addToCart: null,
+	showSku: null,
 }

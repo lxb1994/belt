@@ -151,6 +151,20 @@ class Utils {
 		const _obj = isAli ? '' : obj
 		return API.showShareMenu(_obj)
 	}
+
+	static addToCart(obj = { itemIds: '', exts: '' }) {
+		return new Promise(resolve => {
+			if (!API.addToCart) resolve({ code: 500, data: null })
+			API.addToCart({ itemIds: obj.itemIds, exts: obj.exts, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
+		})
+	}
+
+	static showSku(obj = { itemId: '' }) {
+		return new Promise(resolve => {
+			if (!API.showSku) resolve({ code: 500, data: null })
+			API.showSku({ itemId: obj.itemId, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
+		})
+	}
 }
 
 export default Utils

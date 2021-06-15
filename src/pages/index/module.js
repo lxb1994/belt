@@ -89,6 +89,7 @@ export function onChangeModelListId(item) {
  * 选择腰带商品
  */
 export async function selectBelt(item) {
+	// console.info(item)
 	this.scale = 1
 	this.temPicture = ''
 	const _getImageInfoRes = await Utils.getImageInfo({ src: IMG_URL + item.image1 })
@@ -299,3 +300,4 @@ export function onBtns(type) {
 			break;
 	}
 }
+

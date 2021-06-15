@@ -1,4 +1,5 @@
 import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage, showLoading, hideLoading, removeStorageSync, uploadFile, request } from 'remax/ali'
+
 export default {
 	stopPullDownRefresh,
 	getFileInfo,
@@ -18,5 +19,7 @@ export default {
 	removeStorageSync,
 	uploadFile,
 	request,
-	showShareMenu: () => {}
+	showShareMenu: () => {},
+	addToCart: my.tb.addToCart,
+	showSku: my.tb.showSku,
 }
