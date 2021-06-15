@@ -6,15 +6,15 @@ module.exports.ali = {
     defaultTitle: '智能搭',
     titleBarColor: '#282c34',
   },
-	tabBar: {
-		textColor: '#999999',
-		selectedColor: '#38383A',
-		backgroundColor: '#ffffff',
-		items: [
-			{ pagePath: 'pages/index/index', name: '首页', icon: './assets/tabbar/home.png', activeIcon: './assets/tabbar/home-select.png' },
-			{ pagePath: 'pages/mine/index', name: '我的', icon: './assets/tabbar/mine.png', activeIcon: './assets/tabbar/mine-select.png' },
-		]
-	},
+	// tabBar: {
+	// 	textColor: '#999999',
+	// 	selectedColor: '#38383A',
+	// 	backgroundColor: '#ffffff',
+	// 	items: [
+	// 		{ pagePath: 'pages/index/index', name: '首页', icon: './assets/tabbar/home.png', activeIcon: './assets/tabbar/home-select.png' },
+	// 		{ pagePath: 'pages/mine/index', name: '我的', icon: './assets/tabbar/mine.png', activeIcon: './assets/tabbar/mine-select.png' },
+	// 	]
+	// },
 }
 
 module.exports.wechat = {

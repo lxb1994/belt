@@ -289,3 +289,13 @@ export function onFail(text) {
 export function showShareMenu(params) {
 	Utils.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] })
 }
+
+/**
+ * 底部按钮事件
+ */
+export function onBtns(type) {
+	switch (type) {
+		case 'ADD_CART':
+			break;
+	}
+}

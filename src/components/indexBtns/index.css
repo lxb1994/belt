@@ -32,3 +32,6 @@
 	color: #38383A;
 	border: 1px solid #38383A;
 }
+.btn.cart {
+	background: linear-gradient(to right, #E2D271, #E79A4A);
+}

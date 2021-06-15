@@ -16,7 +16,7 @@ import Loading from '../../components/loading/index'
 import ICON_ENLARGE from '../../assets/enlarge.png'
 import ICON_SMALLER from '../../assets/smaller.png'
 
-import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail, showShareMenu } from './module.js'
+import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail, showShareMenu, onBtns } from './module.js'
 import Styles from './index.css'
 
 const MODEL_WIDTH = 530
@@ -73,6 +73,7 @@ export default class IndexPage extends React.Component {
 		this._onCompose = onCompose.bind(this)
 		this._onFail = onFail.bind(this)
 		this._showShareMenu = showShareMenu.bind(this)
+		this._onBtns = onBtns.bind(this)
 
 		this.beltMoveX = 0
 		this.beltMoveY = 0
@@ -121,7 +122,7 @@ export default class IndexPage extends React.Component {
 				</View>
 
 				{/*底部按钮列表*/}
-				<IndexBtns reset={this._onReset} confirm={this._onSave} intelligence={this._onIntelligence}/>
+				<IndexBtns reset={this._onReset} confirm={this._onSave} intelligence={this._onIntelligence} onClick={this._onBtns}/>
 
 				{showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this._selectRecommendation} onClose={this._onClose.bind(this, 'showRecommendation')}/>}
 
