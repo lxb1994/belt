@@ -84,18 +84,18 @@ export default class IndexPage extends React.Component {
 		this.temPicture = ''
 	}
 
-  componentDidMount() {
+	componentDidMount() {
 		this._showShareMenu()
-  }
+	}
 
 	onShow() {
 		this._onShowFunc()
 	}
 
-  render() {
+	render() {
 		const {  beltAll, beltListId, belt, modelAll, model, modelListId, theme_style_category, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide, preloadImgList, beltPX, loading } = this.state
 		const { beltMoveX, beltMoveY, scale } = this
-    return (
+		return (
 			<View className={Styles.page}>
 				{ /*头部类型选择*/ }
 				<Tabbar list={theme_style_category} onClick={this._onChangeBeltListId}/>
@@ -126,7 +126,7 @@ export default class IndexPage extends React.Component {
 				{loading && <Loading />}
 			</View>
 		)
-  }
+	}
 
 	onPullDownRefresh() {
 		this._getHomeData()

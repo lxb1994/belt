@@ -1,11 +1,11 @@
 const pages = [ 'pages/index/index', 'pages/mine/index', 'pages/history/index', 'pages/commit/index', 'pages/test/index' ]
 
 module.exports.ali = {
-  pages: pages,
-  window: {
-    defaultTitle: '智能搭',
-    titleBarColor: '#282c34',
-  },
+	pages: pages,
+	window: {
+		defaultTitle: '智能搭',
+		titleBarColor: '#282c34',
+	},
 	// tabBar: {
 	// 	textColor: '#999999',
 	// 	selectedColor: '#38383A',
@@ -18,16 +18,16 @@ module.exports.ali = {
 }
 
 module.exports.wechat = {
-  pages,
-  window: {
-    navigationBarTitleText: '智能搭',
-    navigationBarBackgroundColor: '#ffffff',
+	pages,
+	window: {
+		navigationBarTitleText: '智能搭',
+		navigationBarBackgroundColor: '#ffffff',
 		navigationBarTextStyle: 'black',
 		backgroundColor: '#fff',
-  },
+	},
 	tabBar: {
-    color: '#999999',
-    selectedColor: '#38383A',
+		color: '#999999',
+		selectedColor: '#38383A',
 		list: [
 			{ pagePath: 'pages/index/index', text: '首页', iconPath: './assets/tabbar/home.png', selectedIconPath: './assets/tabbar/home-select.png' },
 			{ pagePath: 'pages/mine/index', text: '我的', iconPath: './assets/tabbar/mine.png', selectedIconPath: './assets/tabbar/mine-select.png' },
@@ -36,15 +36,15 @@ module.exports.wechat = {
 }
 
 module.exports.toutiao = {
-  pages,
-  window: {
-    navigationBarTitleText: 'Remax Toutiao Template',
-    navigationBarBackgroundColor: '#282c34',
-  },
+	pages,
+	window: {
+		navigationBarTitleText: 'Remax Toutiao Template',
+		navigationBarBackgroundColor: '#282c34',
+	},
 }
 
 module.exports.web = {
-  pages,
-  title: 'Remax Web Template',
+	pages,
+	title: 'Remax Web Template',
 }
 

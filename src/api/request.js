@@ -2,16 +2,13 @@ import { API_URL, TEST_URL } from './config'
 import Utils from '../common/utils'
 
 let req = {}
-req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {}, }) => {
-  let requestHeader = {
-    'Content-Type': 'application/json',
-    ...header
-  };
+req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {} }) => {
+	let requestHeader = { 'Content-Type': 'application/json', ...header }
 	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
 		Utils.request({
 			url: `${TEST_URL}${url}`,
-			data: {...reqData, token},
+			data: { ...reqData, token },
 			method,
 			header: requestHeader,
 			success: (res) => {
@@ -20,7 +17,7 @@ req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {}, }) =
 					case 13:
 						Utils.removeStorageSync('token')
 						Utils.removeStorageSync('userInfo')
-						break;
+						break
 				}
 				reslove(res.data)
 			},
@@ -31,26 +28,24 @@ req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {}, }) =
 	})
 }
 
-req.upload = ({ url = '', reqData = { filePath: '', formData: {}, name: '' }, header = {}, }) => {
+req.upload = ({ url = '', reqData = { filePath: '', formData: {}, name: '' }, header = {} }) => {
 	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
 		Utils.uploadFile({
 			url: `${API_URL}${url}`,
 			filePath: reqData.filePath,
 			name: reqData.name || 'file',
-			formData: {type: 'member-img', token, ...reqData.formData},
-      header: {
-        'content-type': 'multipart/form-data',
-				...header
-      },
+			formData: { type: 'member-img', token, ...reqData.formData },
+			header: { 'content-type': 'multipart/form-data', ...header },
 			success: (res) => {
-				switch (JSON.parse(res.data).code) {
+				const _res = JSON.parse(res.data)
+				switch (_res.code) {
 					case 13:
 						Utils.removeStorageSync('token')
 						Utils.removeStorageSync('userInfo')
-						break;
+						break
 				}
-				reslove(JSON.parse(res.data))
+				reslove(_res)
 			},
 			fail: (err) => {
 				reject(err)

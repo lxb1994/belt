@@ -1,8 +1,6 @@
 import API from './api'
 import { ISALI, ISWECHAT } from './constants'
 
-const isAli = process.env.REMAX_PLATFORM === 'ali'
-const isWechat = process.env.REMAX_PLATFORM === 'wechat'
 const PLATFORM_NAME = process.env.REMAX_PLATFORM
 
 class Utils {
@@ -108,7 +106,7 @@ class Utils {
 
 	static saveImageToPhotosAlbum(obj = {showActionSheet: true, filePath: '' }) {
 		const FuncName = {ali: 'saveImage', wechat: 'saveImageToPhotosAlbum'}
-		const _obj = isAli ? obj : {filePath: obj.filePath}
+		const _obj = ISALI ? obj : {filePath: obj.filePath}
 		return new Promise(resolve => {
 			API[FuncName[PLATFORM_NAME]]({ ..._obj, success: res => resolve({ code: 200, data: res }), fail: res => resolve({ code: 500, data: res }), complete: res => resolve({ code: 302, data: res }) })
 		})
@@ -138,17 +136,17 @@ class Utils {
 	}
 
 	static request(obj = { url: '', data: {}, method: '', header: {} }) {
-		const _obj = isAli ? {...obj, body: obj.data} : obj
+		const _obj = ISALI ? {...obj, body: obj.data} : obj
 		return API.request(_obj)
 	}
 
 	static uploadFile(obj = { url: '', name: '', formData: {}, header: {}, filePath: '' }) {
-		const _obj = isAli ? {url: obj.url, fileName: obj.name, fileType: obj.fileType || 'image', filePath: '' } : obj
+		const _obj = ISALI ? {url: obj.url, fileName: obj.name, fileType: obj.fileType || 'image', filePath: '' } : obj
 		return API.uploadFile(_obj)
 	}
 
 	static showShareMenu(obj = {withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline']}) {
-		const _obj = isAli ? '' : obj
+		const _obj = ISALI ? '' : obj
 		return API.showShareMenu(_obj)
 	}
 

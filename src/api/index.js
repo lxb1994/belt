@@ -6,7 +6,7 @@ const api = {
 	/**
 	 * 获取小程序授权登录
 	 */
-	 login: (reqData, config) => request.globalRequest({
+	login: (reqData, config) => request.globalRequest({
 		url: '/api/member/third-login',
 		reqData,
 		method: 'POST',
@@ -16,7 +16,7 @@ const api = {
 	/**
 	 * 注册
 	 */
-	 register: (reqData, config) => request.globalRequest({
+	register: (reqData, config) => request.globalRequest({
 		url: '/api/member/update',
 		reqData,
 		method: 'POST',
@@ -26,7 +26,7 @@ const api = {
 	/**
 	 * 获取首页数据
 	 */
-	 getHomeData: (reqData, config) => request.globalRequest({
+	getHomeData: (reqData, config) => request.globalRequest({
 		url: '/api/index',
 		reqData,
 		...config
@@ -35,7 +35,7 @@ const api = {
 	/**
 	 * 创建搭配订单
 	 */
-	 createOrder: (reqData, config) => request.globalRequest({
+	createOrder: (reqData, config) => request.globalRequest({
 		url: '/api/tIndent/create',
 		reqData,
 		method: 'POST',
@@ -45,7 +45,7 @@ const api = {
 	/**
 	 *  统计模特点击/饰品点击
 	 */
-	 addVisitLog: (reqData, config) => request.globalRequest({
+	addVisitLog: (reqData, config) => request.globalRequest({
 		url: '/api/add-visit-log',
 		reqData,
 		method: 'POST',
@@ -55,7 +55,7 @@ const api = {
 	/**
 	 *  获取穿搭列表
 	 */
-	 getVisitHistory: (reqData, config) => request.globalRequest({
+	getVisitHistory: (reqData, config) => request.globalRequest({
 		url: '/api/tIndent',
 		reqData,
 		method: 'POST',
@@ -65,7 +65,7 @@ const api = {
 	/**
 	 * 获取banner
 	 */
-	 getBanner: (reqData, config) => request.globalRequest({
+	getBanner: (reqData, config) => request.globalRequest({
 		url: '/api/banner',
 		reqData,
 		...config
@@ -82,7 +82,7 @@ const api = {
 	/**
 	 *  删除搭配
 	 */
-	 delCommit: (reqData, config) => request.globalRequest({
+	delCommit: (reqData, config) => request.globalRequest({
 		url: '/api/tIndent/delete',
 		reqData,
 		method: 'POST',
