@@ -37,28 +37,27 @@ export function onShowFunc() {
 export async function getHomeData(isRefresh) {
 	let res = await Api.getHomeData()
 	Utils.stopPullDownRefresh()
-	if (res.code === 1) {
-		const { theme, theme_category, theme_style, theme_style_category, theme_to_style } = res.data
-		// 返回的是所有的数据，需要对各模特、腰带数据进行组装
-		// 区分各饰品分类数组
-		let beltAll = {}
-		let beltListId = theme_style_category[0].id
-		theme_style_category.map(it => beltAll[it.id] = [])
-		theme_style.map(it => {
-			it.category_ids.map(child => beltAll[child].push(it))
+	if (res.code !== 1) return
+	const { theme, theme_category, theme_style, theme_style_category, theme_to_style } = res.data
+	// 返回的是所有的数据，需要对各模特、腰带数据进行组装
+	// 区分各饰品分类数组
+	let beltAll = {}
+	let beltListId = theme_style_category[0].id
+	theme_style_category.map(it => beltAll[it.id] = [])
+	theme_style.map(it => {
+		it.category_ids.map(child => beltAll[child].push(it))
+	})
+	// 区分模特各分类数组
+	let modelAll = {}
+	let modelListId = theme_category[0].id
+	theme_category.map(it => { modelAll[it.id] = [] })
+	theme.map(it => {
+		it.category_ids.map(child => {
+			modelAll[child].push(it)
 		})
-		// 区分模特各分类数组
-		let modelAll = {}
-		let modelListId = theme_category[0].id
-		theme_category.map(it => { modelAll[it.id] = [] })
-		theme.map(it => {
-			it.category_ids.map(child => {
-				modelAll[child].push(it)
-			})
-		})
-		if (this.state.modelListId) return this.setState({ theme, theme_style, theme_category, theme_style_category, theme_to_style, beltAll, modelAll })
-		this.setState({ theme, theme_style, theme_category, theme_style_category, theme_to_style, beltAll, beltListId, beltLeft: modelAll[modelListId][0].image1.x * this.beltMultiple / 2, beltTop: modelAll[modelListId][0].image1.y * this.beltMultiple / 2, modelAll, model: modelAll[modelListId][0] || {}, modelListId, preloadImgList: [modelAll[modelListId][0].image1.image, ...(beltAll[beltListId].map(it => (it.image1)) || [])] })
-	}
+	})
+	if (this.state.modelListId) return this.setState({ theme, theme_style, theme_category, theme_style_category, theme_to_style, beltAll, modelAll })
+	this.setState({ theme, theme_style, theme_category, theme_style_category, theme_to_style, beltAll, beltListId, beltLeft: modelAll[modelListId][0].image1.x * this.beltMultiple / 2, beltTop: modelAll[modelListId][0].image1.y * this.beltMultiple / 2, modelAll, model: modelAll[modelListId][0] || {}, modelListId, preloadImgList: [modelAll[modelListId][0].image1.image, ...(beltAll[beltListId].map(it => (it.image1)) || [])] })
 }
 
 /*

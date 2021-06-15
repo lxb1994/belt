@@ -10,6 +10,7 @@ export default class PreloadImgs extends React.Component {
 		this.state = {}
 
 		this.successNum = 0
+		this._onLoad = this.onLoad.bind(this)
 	}
 
 	shouldComponentUpdate(nextProps,nextState) {
@@ -21,12 +22,12 @@ export default class PreloadImgs extends React.Component {
 		const { list } = this.props
 		return (
 			<View className={Styles.preloadImgs}>
-				{list.map((item, i) => <Image key={i} className={Styles.preImg} src={IMG_URL + item} bindload={this.onLoad} onLoad={this.onLoad} binderror={this.onLoad}/>)}
+				{list.map((item, i) => <Image key={i} className={Styles.preImg} src={IMG_URL + item} bindload={this._onLoad} onLoad={this._onLoad} binderror={this._onLoad}/>)}
 			</View>
 		)
 	}
 
-	onLoad = () => {
+	onLoad() {
 		// console.log('onLoad:' + this.successNum)
 		this.successNum = this.successNum + 1
 		if (this.successNum === this.props.list.length) {

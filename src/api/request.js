@@ -1,13 +1,8 @@
-import { API_URL } from './config'
+import { API_URL, TEST_URL } from './config'
 import Utils from '../common/utils'
 
 let req = {}
-req.globalRequest = ({
-  url = '',
-  reqData = {},
-  method = 'GET',
-  header = {},
-}) => {
+req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {}, }) => {
   let requestHeader = {
     'Content-Type': 'application/json',
     ...header
@@ -15,7 +10,7 @@ req.globalRequest = ({
 	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
 		Utils.request({
-			url: `${API_URL}${url}`,
+			url: `${TEST_URL}${url}`,
 			data: {...reqData, token},
 			method,
 			header: requestHeader,
@@ -36,11 +31,7 @@ req.globalRequest = ({
 	})
 }
 
-req.upload = ({
-	url = '',
-	reqData = { filePath: '', formData: {}, name: '' },
-	header = {},
-}) => {
+req.upload = ({ url = '', reqData = { filePath: '', formData: {}, name: '' }, header = {}, }) => {
 	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
 		Utils.uploadFile({
