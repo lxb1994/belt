@@ -1,12 +1,13 @@
-import * as React from 'react';
-import { View, Text, Image, Button, navigateTo } from 'remax/one';
-import Styles from './index.css';
+import * as React from 'react'
+import { View, Image } from 'remax/one'
+import Styles from './index.css'
 import { onReview, onLoadMore, getList, onDel, angle, touchmove, touchstart } from './module.js'
 
 import Api from '../../api/index'
 import { IMG_URL } from '../../api/config'
 
-import Loading from '../../components/loading/index'
+import Loading from '../../components/Loading/index'
+
 export default class Mine extends React.Component {
 	constructor(props) {
 		super(props)

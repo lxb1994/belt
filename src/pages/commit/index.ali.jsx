@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { View, Text, Image } from 'remax/one';
+import * as React from 'react'
+import { View, Text, Image } from 'remax/one'
 import { Canvas } from 'remax/ali'
-import Styles from './index.css';
+import Styles from './index.css'
 import { init, onReviewImage, onBack, onImgErr, onImgOK, drawPic, onSave } from './module.js'
 
 import { IMG_URL } from '../../api/config'
-import Loading from '../../components/loading/index'
+import Loading from '../../components/Loading/index'
+
 export default class IndexPage extends React.Component {
 	constructor(props) {
 		super(props)
@@ -29,9 +30,9 @@ export default class IndexPage extends React.Component {
 		this._init()
 	}
 
-  render() {
+	render() {
 		const { info, imgDraw, loading } = this.state
-    return (
+		return (
 			<View className={Styles.page}>
 				<View className={Styles.container}>
 					<Image className={Styles.image} src={IMG_URL + info.image} onTap={this._onReviewImage} mode="heightFix"/>
@@ -49,5 +50,6 @@ export default class IndexPage extends React.Component {
 				{loading && <Loading />}
 			</View>
 		)
-  }
+	}
 }
+
