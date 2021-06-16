@@ -7,7 +7,7 @@ req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {} }) =>
 	const token = Utils.getStorageSync('token') || ''
 	return new Promise((reslove, reject) => {
 		Utils.request({
-			url: `${TEST_URL}${url}`,
+			url: `${API_URL}${url}`,
 			data: { ...reqData, token },
 			method,
 			header: requestHeader,
