@@ -2,7 +2,7 @@ import * as React from 'react'
 import { View, Image } from 'remax/one'
 import Canvas from '../../components/Canvas'
 
-import ProductLists from '../../components/ProductLists/index'
+import ProductLists from '../../components/ProductList/index'
 // import ModelLists from '../../components/ModelLists/index'
 import IndexBtns from '../../components/IndexBtn/index'
 import Recommendation from '../../components/Recommendation/index'
