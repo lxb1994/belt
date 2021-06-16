@@ -83,7 +83,12 @@
 					"shouldComponentUpdate",
 					"componentWillUpdate",
 					"componentDidUpdate",
-					"componentWillUnmount"
+					"componentWillUnmount",
+					"onLoad",
+					"onShow",
+					"onReady",
+					"onHide",
+					"onUnload"
 				]
 			}
 		}],
