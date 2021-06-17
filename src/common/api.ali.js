@@ -1,4 +1,4 @@
-import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage, showLoading, hideLoading, removeStorageSync, uploadFile, request } from 'remax/ali'
+import { stopPullDownRefresh, getFileInfo, getImageInfo, getSystemInfo, previewImage, showToast, navigateTo, setStorageSync, createCanvasContext, downloadFile, getStorageSync, saveImage, showLoading, hideLoading, removeStorageSync, uploadFile } from 'remax/ali'
 
 export default {
 	stopPullDownRefresh,
@@ -18,7 +18,7 @@ export default {
 	hideLoading,
 	removeStorageSync,
 	uploadFile,
-	request,
+	request: my.request,
 	showShareMenu: () => {},
 	addToCart: my.tb.addToCart,
 	showSku: my.tb.showSku,

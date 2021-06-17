@@ -293,10 +293,15 @@ export function showShareMenu(params) {
 /**
  * 底部按钮事件
  */
-export function onBtns(type) {
+export async function onBtns(type) {
+	const { belt } = this.state
+	// 635860434371
 	switch (type) {
 		case 'ADD_CART':
-			break;
+			// const _res = await Utils.showSku({ itemId: belt.item_id || '635860434371' })
+			// console.info(_res)
+			// console.info(belt)
+			break
 	}
 }
 

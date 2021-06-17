@@ -3,13 +3,13 @@ import Utils from '../common/utils'
 
 let req = {}
 req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {} }) => {
-	let requestHeader = { 'Content-Type': 'application/json', ...header }
+	const requestHeader = { 'Content-Type': 'application/json', ...header }
 	const token = Utils.getStorageSync('token') || ''
-	return new Promise((reslove, reject) => {
+	return new Promise(reslove => {
 		Utils.request({
+			method,
 			url: `${API_URL}${url}`,
 			data: { ...reqData, token },
-			method,
 			header: requestHeader,
 			success: (res) => {
 				switch (res.data.code) {
@@ -22,7 +22,7 @@ req.globalRequest = ({ url = '', reqData = {}, method = 'GET', header = {} }) =>
 				reslove(res.data)
 			},
 			fail: (err) => {
-				reject(err)
+				reslove({ code: 500, msg: err.toString() })
 			}
 		})
 	})

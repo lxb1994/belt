@@ -1,8 +1,8 @@
 .preloadImgs {
 	position: fixed;
-	left: 3000px;
-	top: 0px;
-	z-index: 0;
+	left: 9999px;
+	top: 0;
+	z-index: -1;
 }
 .preImg {
 	width: 50px;

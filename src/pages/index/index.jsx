@@ -98,7 +98,7 @@ export default class IndexPage extends React.Component {
 		return (
 			<View className={Styles.page}>
 				{ /*头部类型选择*/ }
-				<Tabbar list={theme_style_category} onClick={this._onChangeBeltListId}/>
+				<Tabbar list={theme_style_category} onClick={this._onChangeBeltListId} />
 				{ /*不知名功能*/ }
 				{/* <View className={Styles.planSelectBox}>
 					<ModelLists products={modelAll[modelListId] || []} onClick={this.selectModel} />
@@ -109,21 +109,25 @@ export default class IndexPage extends React.Component {
 				</View>
 				{ /*人体服装选择*/ }
 				<View className={Styles.ModelCategory}>
-					<ModelCategory list={theme_category} models={modelAll} onClick={this._onChangeModelListId} onClickModel={this._selectModel}/>
+					<ModelCategory list={theme_category} models={modelAll} onClick={this._onChangeModelListId} onClickModel={this._selectModel} />
 				</View>
-				{/*配件缩小放大按钮*/}
+				{ /*配件缩小放大按钮*/ }
 				<View className={Styles.beltOperation}>
-					<Image className={Styles.smallerIcon} src={ICON_SMALLER} onClick={this._beltOperationSmaller} mode="widthFix"/>
-					<Image className={Styles.enlargeIcon} src={ICON_ENLARGE} onClick={this._beltOperationEnLarger} mode="widthFix"/>
+					<Image className={Styles.smallerIcon} src={ICON_SMALLER} onClick={this._beltOperationSmaller} mode='widthFix' />
+					<Image className={Styles.enlargeIcon} src={ICON_ENLARGE} onClick={this._beltOperationEnLarger} mode='widthFix' />
 				</View>
-				{/*底部按钮列表*/}
-				<IndexBtns reset={this._onReset} confirm={this._onSave} intelligence={this._onIntelligence} onClick={this._onBtns}/>
-				{showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this._selectRecommendation} onClose={this._onClose.bind(this, 'showRecommendation')}/>}
+				{ /*底部按钮列表*/ }
+				<IndexBtns reset={this._onReset} confirm={this._onSave} intelligence={this._onIntelligence} onClick={this._onBtns} />
+			 	{ /*智能搭配*/ }
+				{ showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this._selectRecommendation} onClose={this._onClose.bind(this, 'showRecommendation')} /> }
 				<ModelToBelt model={model} belt={belt} turnDirection={turnDirection} beltLeft={beltMoveX || beltLeft} beltTop={beltMoveY || beltTop} scaleValue={scale} beltWidth={beltWidth} beltHeight={beltHeight} beltPX={beltPX} onChange={this._moveBelt} />
-				{!readGuide && <Guide />}
-				<Canvas canvasId={'shareCanvas'} style={`width: ${MODEL_WIDTH}px;height: ${MODEL_HEIGHT}px;position: fixed;top: -2000px;left: -2000px;`}/>
-				<PreloadImgs list={preloadImgList} onLoadAll={this._onLoadAll}/>
-				{loading && <Loading />}
+				{ /*引导页面*/ }
+				{ !readGuide && <Guide /> }
+				{ /*画布*/ }
+				<Canvas canvasId={'shareCanvas'} style={`width: ${MODEL_WIDTH}px;height: ${MODEL_HEIGHT}px; position: fixed; top: -2000px; left: -2000px;`} />
+				{ /*图片加载*/ }
+				<PreloadImgs list={preloadImgList} onLoadAll={this._onLoadAll} />
+				{ loading && <Loading /> }
 			</View>
 		)
 	}
