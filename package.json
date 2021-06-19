@@ -12,6 +12,7 @@
     "build": "cross-env NODE_ENV=production remax build -t"
   },
   "dependencies": {
+    "@tbmp/mp-cloud-sdk": "^1.4.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "remax": "^2.13.1"
