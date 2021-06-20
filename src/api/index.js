@@ -71,7 +71,19 @@ const api = {
 		...config
 	}),
 
+	/*
+	 * 获取饰品颜色
+	 */
+	getColor: (reqData, config) => request.globalRequest({
+		method: 'POST',
+		url: '/api/color',
+		reqData,
+		...config
+	}),
 
+	/*
+	 * 上传图片
+	 */
 	uploadImg: (reqData, config) => request.upload({
 		url: '/api/member/upload',
 		reqData,

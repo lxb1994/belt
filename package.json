@@ -15,7 +15,8 @@
     "@tbmp/mp-cloud-sdk": "^1.4.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "remax": "^2.13.1"
+    "remax": "^2.13.1",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

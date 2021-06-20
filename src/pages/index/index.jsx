@@ -5,6 +5,7 @@ import Canvas from '../../components/Canvas'
 import ProductLists from '../../components/ProductList/index'
 // import ModelLists from '../../components/ModelLists/index'
 import IndexBtns from '../../components/IndexBtn/index'
+import BeltColorSelect from '../../components/BeltColorSelect'
 import Recommendation from '../../components/Recommendation/index'
 import ModelToBelt from '../../components/ModelToBelt/index'
 import Guide from '../../components/Guide/index'
@@ -16,7 +17,7 @@ import Loading from '../../components/Loading/index'
 import ICON_ENLARGE from '../../assets/enlarge.png'
 import ICON_SMALLER from '../../assets/smaller.png'
 
-import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail, showShareMenu, onBtns } from './module.js'
+import { onLoadAll, onShowFunc, getHomeData, selectModel, onChangeModelListId, selectBelt, onChangeBeltListId, onReset, onCommit, selectRecommendation, onClose, moveBelt, beltOperation, onIntelligence, onSave, onCompose, onFail, showShareMenu, onBtns, onColorSelectClick, onColorSelectClose } from './module.js'
 import Styles from './index.css'
 
 const MODEL_WIDTH = 530
@@ -34,6 +35,7 @@ export default class IndexPage extends React.Component {
 			showRecommendation: false,
 			recommendationMode: 'belt',
 			modelToBelt: [],
+			beltColorList: [],
 			// 腰带
 			beltAll: {},
 			beltListId: '',
@@ -64,7 +66,7 @@ export default class IndexPage extends React.Component {
 		this._onReset = onReset.bind(this)
 		this._onCommit = onCommit.bind(this)
 		this._selectRecommendation = selectRecommendation.bind(this)
-		this._onClose = onClose.bind(this)
+		this._onClose = onClose.bind(this, 'showRecommendation')
 		this._moveBelt = moveBelt.bind(this)
 		this._beltOperationSmaller = beltOperation.bind(this, 'smaller')
 		this._beltOperationEnLarger = beltOperation.bind(this, 'enlarge')
@@ -74,6 +76,8 @@ export default class IndexPage extends React.Component {
 		this._onFail = onFail.bind(this)
 		this._showShareMenu = showShareMenu.bind(this)
 		this._onBtns = onBtns.bind(this)
+		this._onColorSelectClick = onColorSelectClick.bind(this)
+		this._onColorSelectClose = onColorSelectClose.bind(this)
 
 		this.beltMoveX = 0
 		this.beltMoveY = 0
@@ -93,7 +97,7 @@ export default class IndexPage extends React.Component {
 	}
 
 	render() {
-		const {  beltAll, beltListId, belt, modelAll, model, modelListId, theme_style_category, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide, preloadImgList, beltPX, loading } = this.state
+		const {  beltAll, beltListId, belt, modelAll, model, modelListId, beltColorList, theme_style_category, beltLeft, beltTop, beltWidth, beltHeight, theme_category, showRecommendation, modelToBelt, turnDirection, recommendationMode, readGuide, preloadImgList, beltPX, loading } = this.state
 		const { beltMoveX, beltMoveY, scale } = this
 		return (
 			<View className={Styles.page}>
@@ -119,7 +123,8 @@ export default class IndexPage extends React.Component {
 				{ /*底部按钮列表*/ }
 				<IndexBtns reset={this._onReset} confirm={this._onSave} intelligence={this._onIntelligence} onClick={this._onBtns} />
 			 	{ /*智能搭配*/ }
-				{ showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this._selectRecommendation} onClose={this._onClose.bind(this, 'showRecommendation')} /> }
+				{ showRecommendation && <Recommendation mode={recommendationMode} list={modelToBelt} onClick={this._selectRecommendation} onClose={this._onClose.bind(this)} /> }
+				{ beltColorList.length !== 0 ? <BeltColorSelect list={beltColorList} onClick={this._onColorSelectClick} onClose={this._onColorSelectClose} /> : null }
 				<ModelToBelt model={model} belt={belt} turnDirection={turnDirection} beltLeft={beltMoveX || beltLeft} beltTop={beltMoveY || beltTop} scaleValue={scale} beltWidth={beltWidth} beltHeight={beltHeight} beltPX={beltPX} onChange={this._moveBelt} />
 				{ /*引导页面*/ }
 				{ !readGuide && <Guide /> }

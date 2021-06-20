@@ -88,12 +88,48 @@ export function onChangeModelListId(item) {
  * 选择腰带商品
  */
 export async function selectBelt(item) {
-	// console.info(item)
+	if (item.has_color === 2) {
+		// this.scale = 1
+		// this.temPicture = ''
+		// const _getImageInfoRes = await Utils.getImageInfo({ src: IMG_URL + item.image1 })
+		// if (_getImageInfoRes.code !== 200) return
+		// this.setState({ belt: {...item}, beltWidth: _getImageInfoRes.data.width * this.beltMultiple, beltHeight: _getImageInfoRes.data.height * this.beltMultiple, beltPX: 0})
+		setBeltPic.call(this, item, item.image1)
+	} else {
+		const _colorRes = await Api.getColor({ theme_style_id: item.id })
+		if (_colorRes.code !== 1) return Utils.showToast({ title: '服务出现异常' })
+		this.setState({ belt: { ...item }, beltColorList: _colorRes.data.color_list })
+	}
+}
+
+/*
+ * 颜色选择器元素点击
+ */
+export function onColorSelectClick(item) {
+	const { belt } = this.state
+	const _item = { ...belt }
+	_item.image1 = item.image
+	this.setState({ beltColorList: [] })
+	setBeltPic.call(this, _item, item.image)
+}
+
+/*
+ * 颜色选择器关闭
+ */
+export function onColorSelectClose() {
+	this.setState({ beltColorList: [] })
+}
+
+/*
+ * 设置腰带
+ */
+async function setBeltPic(item = {}, src = '') {
+
 	this.scale = 1
 	this.temPicture = ''
-	const _getImageInfoRes = await Utils.getImageInfo({ src: IMG_URL + item.image1 })
+	const _getImageInfoRes = await Utils.getImageInfo({ src: IMG_URL + src })
 	if (_getImageInfoRes.code !== 200) return
-	this.setState({ belt: {...item}, beltWidth: _getImageInfoRes.data.width * this.beltMultiple, beltHeight: _getImageInfoRes.data.height * this.beltMultiple, beltPX: 0})
+	this.setState({ belt: { ...item }, beltWidth: _getImageInfoRes.data.width * this.beltMultiple, beltHeight: _getImageInfoRes.data.height * this.beltMultiple, beltPX: 0 })
 }
 
 /*
