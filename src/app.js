@@ -9,7 +9,11 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {}
-		if (ISALI) this.cloud = cloud.init({ env: 'test' })
+		if (ISALI) {
+			this.cloud = cloud.init({ env: 'test' })
+			console.info(this.cloud)
+			console.info(getApp().cloud)
+		}
 	}
 
 	render() {

@@ -6,3 +6,7 @@ exports.get_banner = async (event, context) => {
 exports.get_theme = async(event, context) => {
 	return { code: 1, data : {} }
 }
+
+exports.get_color = async(event, context) => {
+	return { code: 1, data: {} }
+}
