@@ -331,12 +331,11 @@ export function showShareMenu(params) {
  */
 export async function onBtns(type) {
 	const { belt } = this.state
-	// 635860434371
+	const { item_id } = belt
 	switch (type) {
 		case 'ADD_CART':
-			const _res = await Utils.showSku({ itemId: belt.item_id || '635860434371' })
-			console.info(_res)
-			console.info(belt)
+			if (!item_id) return Utils.showToast({ title: '此商品还没有对应的ID' })
+			await Utils.showSku({ itemId: item_id })
 			break
 	}
 }

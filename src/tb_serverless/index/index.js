@@ -1,4 +1,3 @@
-
 exports.get_banner = async (event, context) => {
 	return { code:1, msg: '', data:{ banner_list:[ { image: '\/upload\/app-banner\/2021-06-16\/30d09ad750d053d57ae205167cbf2858.jpg', number: 1, title: '\u77f3\u818f', type: 1 } ] } }
 }
@@ -8,5 +7,5 @@ exports.get_theme = async(event, context) => {
 }
 
 exports.get_color = async(event, context) => {
-	return { code: 1, data: {} }
+	return { code: 2, data: {} }
 }
