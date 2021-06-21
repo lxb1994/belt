@@ -334,9 +334,9 @@ export async function onBtns(type) {
 	// 635860434371
 	switch (type) {
 		case 'ADD_CART':
-			// const _res = await Utils.showSku({ itemId: belt.item_id || '635860434371' })
-			// console.info(_res)
-			// console.info(belt)
+			const _res = await Utils.showSku({ itemId: belt.item_id || '635860434371' })
+			console.info(_res)
+			console.info(belt)
 			break
 	}
 }
