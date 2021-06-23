@@ -26,7 +26,7 @@ export default class Model extends React.Component {
 							<View className={Styles.modelList}>
 								{
 									list.map(item => <View className={Styles.modelItem} key={item.id} onClick={this._onClick.bind(this, item)}>
-										<Image className={Styles.modelImage} src={`${IMG_URL}${item.image}`} mode="widthFix"/>
+										<Image className={Styles.modelImage} src={`${IMG_URL}${item.cover}`} mode='widthFix' />
 									</View>)
 								}
 							</View>

@@ -98,7 +98,7 @@ export async function selectBelt(item) {
 	} else {
 		const _colorRes = await Api.getColor({ theme_style_id: item.id })
 		if (_colorRes.code !== 1) return Utils.showToast({ title: '服务出现异常' })
-		this.setState({ belt: { ...item }, beltColorList: _colorRes.data.color_list })
+		this.setState({ belt: { ...item, image1: '' }, beltColorList: _colorRes.data.color_list })
 	}
 }
 
@@ -108,9 +108,9 @@ export async function selectBelt(item) {
 export function onColorSelectClick(item) {
 	const { belt } = this.state
 	const _item = { ...belt }
-	_item.image1 = item.image
+	_item.image1 = item.image1
 	this.setState({ beltColorList: [] })
-	setBeltPic.call(this, _item, item.image)
+	setBeltPic.call(this, _item, item.image1)
 }
 
 /*
@@ -124,7 +124,6 @@ export function onColorSelectClose() {
  * 设置腰带
  */
 async function setBeltPic(item = {}, src = '') {
-
 	this.scale = 1
 	this.temPicture = ''
 	const _getImageInfoRes = await Utils.getImageInfo({ src: IMG_URL + src })
